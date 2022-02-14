@@ -5,8 +5,9 @@ using UnityEngine;
 public class Grapple : MonoBehaviour
 {
     public Camera cam;
-    public Transform head, firePos; 
+    public Transform head, firePos;
 
+    private PlayerController controller; 
     private Vector2 mousePos, headPos, aimDir;
     private bool grappling; 
     private LineRenderer aim, rope;
@@ -19,6 +20,7 @@ public class Grapple : MonoBehaviour
         aim = head.GetComponent<LineRenderer>();
         rope = GetComponent<LineRenderer>();
         distJoint = GetComponent<DistanceJoint2D>();
+        controller = GetComponentInParent<PlayerController>();
         distJoint.enabled = false;
         rope.enabled = false;
         aim.enabled = true;
@@ -38,12 +40,14 @@ public class Grapple : MonoBehaviour
             distJoint.enabled = true;
             rope.enabled = true;
             grappling = true;
+            controller.isSwinging(grappling);
         }
         else if(Input.GetKeyUp(KeyCode.Mouse0))
         {
             distJoint.enabled = false;
             rope.enabled = false;
             grappling = false;
+            controller.isSwinging(grappling);
         }
 
         if (distJoint.enabled)
