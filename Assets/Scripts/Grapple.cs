@@ -12,6 +12,7 @@ public class Grapple : MonoBehaviour
     private bool grappling; 
     private LineRenderer aim, rope;
     private DistanceJoint2D distJoint;
+    private float minLookX = 2f, minLookY = -2f, maxLookY = 4f;
 
     // Start is called before the first frame update
     void Start()
@@ -33,21 +34,11 @@ public class Grapple : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Vector2 mousePos = (Vector2)cam.ScreenToWorldPoint(Input.mousePosition);
-            rope.SetPosition(0, mousePos);
-            rope.SetPosition(1, headPos);
-            distJoint.connectedAnchor = mousePos;
-            distJoint.enabled = true;
-            rope.enabled = true;
-            grappling = true;
-            controller.isSwinging(grappling);
+            StartGrapple();
         }
         else if(Input.GetKeyUp(KeyCode.Mouse0))
         {
-            distJoint.enabled = false;
-            rope.enabled = false;
-            grappling = false;
-            controller.isSwinging(grappling);
+            StopGrapple();
         }
 
         if (distJoint.enabled)
@@ -66,6 +57,22 @@ public class Grapple : MonoBehaviour
         mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
         headPos = head.position;
         aimDir = mousePos - headPos;
+
+        //if (aimDir.y < minLook)
+        //{
+        //    aimDir.y = minLook;
+        //}
+        //else if (aimDir.y > maxLook)
+        //{
+        //    aimDir.y = maxLook;
+        //}
+
+        if (aimDir.x < minLookX)
+        {
+            aimDir.x = minLookX;
+        }
+
+        head.transform.right = aimDir;
     }
 
     void DrawAim()
@@ -83,5 +90,25 @@ public class Grapple : MonoBehaviour
             aim.enabled = false; 
         }
         aim.SetPosition(1, aimRay.GetPoint(50));
+    }
+
+    void StartGrapple()
+    {
+        Vector2 mousePos = (Vector2)cam.ScreenToWorldPoint(Input.mousePosition);
+        rope.SetPosition(0, mousePos);
+        rope.SetPosition(1, headPos);
+        distJoint.connectedAnchor = mousePos;
+        distJoint.enabled = true;
+        rope.enabled = true;
+        grappling = true;
+        controller.isSwinging(grappling);
+    }
+
+    void StopGrapple()
+    {
+        distJoint.enabled = false;
+        rope.enabled = false;
+        grappling = false;
+        controller.isSwinging(grappling);
     }
 }

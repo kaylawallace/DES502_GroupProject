@@ -76,6 +76,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void Jump()
+    {
+        if (isGrounded())
+        {
+            jumping = false;
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                jumping = true;
+                rb.velocity = Vector2.up * jumpForce;
+            }
+        }
+    }
+
     bool isGrounded()
     {
         grounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
@@ -91,20 +105,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             return swinging = false; 
-        }
-    }
-
-    void Jump()
-    {
-        if (isGrounded())
-        {
-            jumping = false;
-
-            if (Input.GetButtonDown("Jump"))
-            {
-                jumping = true;
-                rb.velocity = Vector2.up * jumpForce;
-            }
         }
     }
 }
