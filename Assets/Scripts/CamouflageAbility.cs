@@ -74,7 +74,9 @@ public class CamouflageAbility : MonoBehaviour
     {
         if (collision.CompareTag("Invisible"))
         {
-            GoInvisible(); 
+            GoInvisible();
+            GameObject col = collision.gameObject;
+            Destroy(col);
         }
     }
 }

@@ -14,6 +14,7 @@ public class Grapple : MonoBehaviour
     private LineRenderer aim, rope;
     private DistanceJoint2D distJoint;
     private float minLookX = 2f, minLookY = -2f, maxLookY = 4f;
+    private bool facingRight;
 
     // Start is called before the first frame update
     void Start()
@@ -26,12 +27,22 @@ public class Grapple : MonoBehaviour
         distJoint.enabled = false;
         rope.enabled = false;
         aim.enabled = true;
+        facingRight = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         Aim();
+
+        if (transform.rotation.y == 180)
+        {
+            facingRight = false;
+        }
+        else
+        {
+            facingRight = true;
+        }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -68,10 +79,25 @@ public class Grapple : MonoBehaviour
         //    aimDir.y = maxLook;
         //}
 
-        if (aimDir.x < minLookX)
-        {
-            aimDir.x = minLookX;
-        }
+        //if (mousePos.x < transform.position.x)
+        //{
+        //    facingRight = false;
+        //    mousePos.x = -mousePos.x;
+        //}
+        //else
+        //{
+        //    facingRight = true;
+        //}
+
+        //if (!facingRight)
+        //{
+        //    minLookX = -minLookX;           
+        //}
+
+        //if (aimDir.x < minLookX)
+        //{
+        //    aimDir.x = minLookX;
+        //}
 
         head.transform.right = aimDir;
     }
