@@ -367,6 +367,9 @@ MonoBehaviour:
   cam: {fileID: 838286980}
   head: {fileID: 1718139631}
   firePos: {fileID: 1393101172}
+  grappleable:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!232 &247763738
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -932,9 +935,9 @@ GameObject:
   - component: {fileID: 1426570941}
   - component: {fileID: 1426570940}
   - component: {fileID: 1426570939}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square (3)
-  m_TagString: Untagged
+  m_TagString: Grappleable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1367,9 +1370,9 @@ GameObject:
   - component: {fileID: 1987605892}
   - component: {fileID: 1987605891}
   - component: {fileID: 1987605890}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square (2)
-  m_TagString: Untagged
+  m_TagString: Grappleable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

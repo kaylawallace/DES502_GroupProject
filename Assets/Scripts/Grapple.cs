@@ -6,6 +6,7 @@ public class Grapple : MonoBehaviour
 {
     public Camera cam;
     public Transform head, firePos;
+    public LayerMask grappleable;
 
     private PlayerController controller; 
     private Vector2 mousePos, headPos, aimDir;
@@ -95,13 +96,28 @@ public class Grapple : MonoBehaviour
     void StartGrapple()
     {
         Vector2 mousePos = (Vector2)cam.ScreenToWorldPoint(Input.mousePosition);
-        rope.SetPosition(0, mousePos);
-        rope.SetPosition(1, headPos);
-        distJoint.connectedAnchor = mousePos;
-        distJoint.enabled = true;
-        rope.enabled = true;
-        grappling = true;
-        controller.isSwinging(grappling);
+
+        RaycastHit2D ray = Physics2D.Raycast(transform.position, aimDir, 10f, grappleable);
+        
+        if (ray)
+        {
+            print(ray.collider.tag);
+            if (ray.collider.CompareTag("Grappleable"))
+            {
+                Vector2 hitPoint = ray.point;
+                rope.SetPosition(0, hitPoint);
+                rope.SetPosition(1, headPos);
+                distJoint.connectedAnchor = hitPoint;
+                distJoint.enabled = true;
+                rope.enabled = true;
+                grappling = true;
+                controller.isSwinging(grappling);
+            }
+            else
+            {
+                return;
+            }
+        }     
     }
 
     void StopGrapple()
