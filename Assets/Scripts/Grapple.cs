@@ -95,13 +95,10 @@ public class Grapple : MonoBehaviour
 
     void StartGrapple()
     {
-        Vector2 mousePos = (Vector2)cam.ScreenToWorldPoint(Input.mousePosition);
-
         RaycastHit2D ray = Physics2D.Raycast(transform.position, aimDir, 10f, grappleable);
         
         if (ray)
         {
-            print(ray.collider.tag);
             if (ray.collider.CompareTag("Grappleable"))
             {
                 Vector2 hitPoint = ray.point;
@@ -117,7 +114,11 @@ public class Grapple : MonoBehaviour
             {
                 return;
             }
-        }     
+        } 
+        else
+        {
+            return;
+        }
     }
 
     void StopGrapple()
