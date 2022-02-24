@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!knocked)
+        if (!knocked && !GetComponent<Player>().conversing)
         {
             Move();
         }
@@ -48,6 +48,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 knockbackTime -= Time.deltaTime;
             }
+        }
+        else
+        {
+            return;
         }
     }
 

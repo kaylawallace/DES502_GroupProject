@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public int maxHealth;
+    public bool conversing = false;
 
     private bool justDamaged;
     private float cooldown = 1f;
