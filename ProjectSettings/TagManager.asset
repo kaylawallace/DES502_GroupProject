@@ -7,6 +7,8 @@ TagManager:
   - Grappleable
   - Background
   - Invisible
+  - Environment
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -16,8 +18,8 @@ TagManager:
   - UI
   - Grappleable
   - Background
-  - 
-  - 
+  - Ground
+  - Enemy
   - 
   - 
   - 

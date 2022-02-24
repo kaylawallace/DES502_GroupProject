@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -50,6 +51,11 @@ public class Player : MonoBehaviour
     private void Die()
     {
         Debug.Log("Player died");
+    }
+
+    public int GetHealth()
+    {
+        return health;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

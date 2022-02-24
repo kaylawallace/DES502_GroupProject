@@ -14,7 +14,7 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -48,7 +48,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8410bd83256b6304e829a924d00dfb2d, type: 2}
+  m_Motion: {fileID: 7400000, guid: 7c2f0f8befda1c647ab349477c84b899, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -125,7 +125,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 45d672db8475419409adeaf3a2b27b19, type: 2}
+  m_Motion: {fileID: 7400000, guid: 013ac9ade2a80a845a4cdc220f139e89, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

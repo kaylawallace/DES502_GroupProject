@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
             if (knockbackTime <= 0)
             {
                 knocked = false;
+                rb.velocity = Vector2.zero;
                 knockbackTime = maxKnockbackTime;
             }
             else
