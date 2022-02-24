@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
                 if (movInput > 0)
                 {
-                    transform.eulerAngles = new Vector3(0, 180, 0);
+                    transform.eulerAngles = new Vector3(0, -180, 0);
                 }
                 else if (movInput < 0)
                 {
@@ -130,16 +130,16 @@ public class PlayerMovement : MonoBehaviour
 
     public void Knockback()
     {
-        knocked = true; 
-
-        if (transform.rotation.y == 180)
-        {
-            Vector2 knockbackDir = new Vector2(1, 0);
-            rb.velocity = new Vector2(knockbackDir.x * knockbackForce, rb.velocity.y);
-        }
-        else
+        knocked = true;
+        
+        if (transform.rotation.eulerAngles.y == 180)
         {
             Vector2 knockbackDir = new Vector2(-1, 0);
+            rb.velocity = new Vector2(knockbackDir.x * knockbackForce, rb.velocity.y);
+        }
+        else if (transform.rotation.eulerAngles.y == 0)
+        {
+            Vector2 knockbackDir = new Vector2(1, 0);
             rb.velocity = new Vector2(knockbackDir.x * knockbackForce, rb.velocity.y);
         }            
     }

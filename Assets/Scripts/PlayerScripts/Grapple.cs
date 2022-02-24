@@ -15,6 +15,7 @@ public class Grapple : MonoBehaviour
     private DistanceJoint2D distJoint;
     private float minLookX = 2f, minLookY = -2f, maxLookY = 4f;
     private bool facingRight;
+    [SerializeField] private float reelRate;
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +57,11 @@ public class Grapple : MonoBehaviour
         if (distJoint.enabled)
         {
             rope.SetPosition(1, transform.position);
+        }
+
+        if (grappling)
+        {
+            ReelGrapple();
         }
     }
 
@@ -153,5 +159,17 @@ public class Grapple : MonoBehaviour
         rope.enabled = false;
         grappling = false;
         controller.isSwinging(grappling);
+    }
+
+    void ReelGrapple()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            distJoint.distance -= reelRate * Time.deltaTime;
+        }
+        else if (Input.GetKey(KeyCode.LeftShift))
+        {
+            distJoint.distance += reelRate * Time.deltaTime;
+        }
     }
 }
