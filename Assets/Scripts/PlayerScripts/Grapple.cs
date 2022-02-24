@@ -8,7 +8,7 @@ public class Grapple : MonoBehaviour
     public Transform head, firePos;
     public LayerMask grappleable;
 
-    private PlayerController controller; 
+    private PlayerMovement controller; 
     private Vector2 mousePos, headPos, aimDir;
     private bool grappling; 
     private LineRenderer aim, rope;
@@ -23,7 +23,7 @@ public class Grapple : MonoBehaviour
         aim = head.GetComponent<LineRenderer>();
         rope = GetComponent<LineRenderer>();
         distJoint = GetComponent<DistanceJoint2D>();
-        controller = GetComponentInParent<PlayerController>();
+        controller = GetComponentInParent<PlayerMovement>();
         distJoint.enabled = false;
         rope.enabled = false;
         aim.enabled = true;

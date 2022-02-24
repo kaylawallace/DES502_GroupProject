@@ -2,21 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     public float speed, jumpForce, swingForce;
     public Transform feetPos;
     public float checkRadius;
+    public float maxKnockbackTime;
 
     private Rigidbody2D rb;
     private float movInput;
-    private bool grounded, jumping, swinging;
+    private float knockbackTime;
+    private bool grounded = false, jumping = false, swinging = false, knocked = false;
     [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private float knockbackForce;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        knockbackTime = maxKnockbackTime;
     }
 
     // Update is called once per frame
@@ -28,7 +32,22 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();       
+        if (!knocked)
+        {
+            Move();
+        }
+        else if (knocked)
+        {
+            if (knockbackTime <= 0)
+            {
+                knocked = false;
+                knockbackTime = maxKnockbackTime;
+            }
+            else
+            {
+                knockbackTime -= Time.deltaTime;
+            }
+        }
     }
 
     private void Move()
@@ -106,5 +125,21 @@ public class PlayerController : MonoBehaviour
         {
             return swinging = false; 
         }
+    }
+
+    public void Knockback()
+    {
+        knocked = true; 
+
+        if (transform.rotation.y == 180)
+        {
+            Vector2 knockbackDir = new Vector2(1, 0);
+            rb.velocity = new Vector2(knockbackDir.x * knockbackForce, rb.velocity.y);
+        }
+        else
+        {
+            Vector2 knockbackDir = new Vector2(-1, 0);
+            rb.velocity = new Vector2(knockbackDir.x * knockbackForce, rb.velocity.y);
+        }            
     }
 }
