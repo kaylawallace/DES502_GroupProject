@@ -4,21 +4,28 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int maxHealth = 100;
+    public int maxHealth = 30;
 
     private int currHealth;
-    private bool justDamaged;
-    private float cooldown = .5f;
+    private bool justDamaged = false;
+    private float damageCooldown, maxDamageCooldown = .8f;
 
+
+    private void Start()
+    {
+        damageCooldown = maxDamageCooldown;
+        currHealth = maxHealth;
+    }
     private void Update()
     {
         if (justDamaged)
         {
-            cooldown -= Time.deltaTime;
+            damageCooldown -= Time.deltaTime;
 
-            if (cooldown <= 0)
+            if (damageCooldown <= 0)
             {
                 justDamaged = false;
+                damageCooldown = maxDamageCooldown;
             }
         }
     }
@@ -41,9 +48,14 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Enemy died");
+        Destroy(gameObject);
+    }
 
-        // Die anim 
-        // Remove enemy
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.GetComponent<Tongue>())
+        {
+            TakeDamage(other.GetComponent<Tongue>().damage);
+        }
     }
 }

@@ -8,16 +8,15 @@ public class Player : MonoBehaviour
     public int maxHealth;
     public bool conversing = false;
 
+    Tongue tongue;
     private bool justDamaged;
     private float cooldown = 1f;
-    //public HealthBar healthBar;
-
     private int health;
 
     void Start()
     {
         health = maxHealth;
-        //healthBar.SetMaxHealth(maxHealth);
+        tongue = GetComponentInChildren<Tongue>();
     }
 
     private void Update()
@@ -35,7 +34,7 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (!justDamaged)
+        if (!justDamaged && !tongue.attacking)
         {
             justDamaged = true;
             health -= damage;
@@ -62,7 +61,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") && !tongue.attacking)
         {
             TakeDamage(1);
             GetComponent<PlayerMovement>().Knockback();
@@ -74,7 +73,7 @@ public class Player : MonoBehaviour
                 health++;
                 GetComponent<HealthUI>().UpdateHearts();
             }
-            Destroy(collision.gameObject);                      
+            Destroy(collision.gameObject);
         }
     }
 }

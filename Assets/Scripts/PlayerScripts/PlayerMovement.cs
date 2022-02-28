@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
                 return;
             }
         }
-       
+
         if (swinging)
         {
             if (movInput != 0)
@@ -117,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded()
     {
         grounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
-        return grounded; 
+        return grounded;
     }
 
     public bool isSwinging(bool _swinging)
@@ -128,14 +128,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            return swinging = false; 
+            return swinging = false;
         }
     }
 
     public void Knockback()
     {
         knocked = true;
-        
+
         if (transform.rotation.eulerAngles.y == 180)
         {
             Vector2 knockbackDir = new Vector2(-1, 0);
@@ -145,6 +145,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector2 knockbackDir = new Vector2(1, 0);
             rb.velocity = new Vector2(knockbackDir.x * knockbackForce, rb.velocity.y);
-        }            
+        }
     }
 }

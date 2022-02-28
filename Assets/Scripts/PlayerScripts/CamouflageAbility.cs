@@ -23,7 +23,6 @@ public class CamouflageAbility : MonoBehaviour
             col = new Color[renderers.Length];
             for (int i = 0; i < renderers.Length; i++)
             {
-                print(renderers[i].name);
                 col[i] = renderers[i].color;
             }
         }
