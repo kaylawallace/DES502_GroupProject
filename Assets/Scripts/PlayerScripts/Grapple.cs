@@ -56,7 +56,7 @@ public class Grapple : MonoBehaviour
 
         if (distJoint.enabled)
         {
-            rope.SetPosition(1, transform.position);
+            rope.SetPosition(1, firePos.transform.position);
         }
 
         if (grappling)
