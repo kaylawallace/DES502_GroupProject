@@ -111,6 +111,7 @@ public class Grapple : MonoBehaviour
     void DrawAim()
     {
         Ray2D aimRay = new Ray2D(transform.position, aimDir);
+        aim.sortingOrder = 50;
 
         if (!grappling)
         {

@@ -66,6 +66,11 @@ public class Player : MonoBehaviour
             TakeDamage(1);
             GetComponent<PlayerMovement>().Knockback();
         }
+        else if (collision.CompareTag("Hazard"))
+        {
+            TakeDamage(1);
+            GetComponent<PlayerMovement>().Knockback();
+        }
         else if (collision.CompareTag("Health"))
         {
             if (health < maxHealth)
