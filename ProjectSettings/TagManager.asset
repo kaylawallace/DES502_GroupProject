@@ -14,6 +14,8 @@ TagManager:
   - Dialogue
   - Tongue
   - Projectile
+  - Hazard
+  - Platform
   layers:
   - Default
   - TransparentFX

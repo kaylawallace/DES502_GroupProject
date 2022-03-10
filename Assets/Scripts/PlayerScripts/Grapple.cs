@@ -127,7 +127,7 @@ public class Grapple : MonoBehaviour
 
     void StartGrapple()
     {
-        RaycastHit2D ray = Physics2D.Raycast(transform.position, aimDir, 10f, grappleable);
+        RaycastHit2D ray = Physics2D.Raycast(transform.position, aimDir, 20f, grappleable);
         
         if (ray)
         {

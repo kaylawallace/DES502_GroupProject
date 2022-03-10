@@ -12,8 +12,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private float movInput;
     private float knockbackTime;
-    private bool grounded = false, jumping = false, swinging = false, knocked = false;
-    [SerializeField] private LayerMask whatIsGround;
+    private bool grounded = false, jumping = false, swinging = false, knocked = false, isOnPlatform = false;
+    [SerializeField] private LayerMask whatIsGround, whatIsPlatform;
     [SerializeField] private float knockbackForce;
 
     // Start is called before the first frame update
@@ -32,9 +32,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!knocked && !GetComponent<Player>().conversing)
+        if (!knocked && !GetComponent<Player>().conversing && !swinging)
         {
             Move();
+        }
+        else if (swinging)
+        {
+            Swing();
         }
         else if (knocked)
         {
@@ -57,8 +61,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        if (isGrounded())
-        {
+        //if (isGrounded())
+        //{
             if (movInput != 0)
             {
                 rb.velocity = new Vector2(movInput * speed, rb.velocity.y);
@@ -76,8 +80,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 return;
             }
-        }
+        //}
 
+       
+    }
+
+    public void Swing()
+    {
         if (swinging)
         {
             if (movInput != 0)
@@ -102,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        if (isGrounded())
+        if (IsGrounded())
         {
             jumping = false;
 
@@ -114,15 +123,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    bool isGrounded()
+    bool IsGrounded()
     {
         grounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
         return grounded;
     }
 
+    bool IsOnPlatform()
+    {
+        isOnPlatform = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsPlatform);
+        return isOnPlatform;
+    }
+
     public bool isSwinging(bool _swinging)
     {
-        if (!isGrounded() && _swinging)
+        if (!IsGrounded() && _swinging)
         {
             return swinging = true;
         }
@@ -131,6 +146,14 @@ public class PlayerMovement : MonoBehaviour
             return swinging = false;
         }
     }
+
+    //void OnPlatform()
+    //{
+    //    if (IsOnPlatform())
+    //    {
+    //        transform.parent =
+    //    }
+    //}
 
     public void Knockback()
     {
