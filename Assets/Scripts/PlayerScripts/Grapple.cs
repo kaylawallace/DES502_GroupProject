@@ -10,7 +10,7 @@ public class Grapple : MonoBehaviour
 
     private PlayerMovement controller; 
     private Vector2 mousePos, headPos, aimDir;
-    private bool grappling; 
+    private bool grappling, aiming; 
     private LineRenderer aim, rope;
     private DistanceJoint2D distJoint;
     private float minLookX = 2f, minLookY = -2f, maxLookY = 4f;
@@ -34,7 +34,7 @@ public class Grapple : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Aim();
+        //Aim();
 
         if (transform.rotation.y == 180)
         {
@@ -44,6 +44,15 @@ public class Grapple : MonoBehaviour
         {
             facingRight = true;
         }
+
+        //if (Input.GetKeyDown(KeyCode.Mouse1))
+        //{
+        //    Aim();
+        //}
+        //else if (Input.GetKeyUp(KeyCode.Mouse1))
+        //{
+        //    StopAim(); 
+        //}
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -67,43 +76,23 @@ public class Grapple : MonoBehaviour
 
     private void LateUpdate()
     {
-        DrawAim();
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            Aim();
+            DrawAim(); 
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            StopAim(); 
+        }     
     }
 
     void Aim()
     {
+        aiming = true;
         mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
         headPos = head.position;
         aimDir = mousePos - headPos;
-
-        //if (aimDir.y < minLook)
-        //{
-        //    aimDir.y = minLook;
-        //}
-        //else if (aimDir.y > maxLook)
-        //{
-        //    aimDir.y = maxLook;
-        //}
-
-        //if (mousePos.x < transform.position.x)
-        //{
-        //    facingRight = false;
-        //    mousePos.x = -mousePos.x;
-        //}
-        //else
-        //{
-        //    facingRight = true;
-        //}
-
-        //if (!facingRight)
-        //{
-        //    minLookX = -minLookX;           
-        //}
-
-        //if (aimDir.x < minLookX)
-        //{
-        //    aimDir.x = minLookX;
-        //}
 
         head.transform.right = aimDir;
     }
@@ -124,6 +113,12 @@ public class Grapple : MonoBehaviour
             aim.enabled = false; 
         }
         aim.SetPosition(1, aimRay.GetPoint(50));
+    }
+
+    void StopAim()
+    {
+        aiming = false;
+        aim.enabled = false; 
     }
 
     void StartGrapple()
