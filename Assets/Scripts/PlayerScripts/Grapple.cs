@@ -34,7 +34,7 @@ public class Grapple : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Aim();
+        //Aim();
 
         if (transform.rotation.y == 180)
         {
@@ -67,7 +67,16 @@ public class Grapple : MonoBehaviour
 
     private void LateUpdate()
     {
-        DrawAim();
+        //DrawAim();
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            Aim();
+            DrawAim();
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            StopAim();
+        }
     }
 
     void Aim()
@@ -76,37 +85,14 @@ public class Grapple : MonoBehaviour
         headPos = head.position;
         aimDir = mousePos - headPos;
 
-        //if (aimDir.y < minLook)
-        //{
-        //    aimDir.y = minLook;
-        //}
-        //else if (aimDir.y > maxLook)
-        //{
-        //    aimDir.y = maxLook;
-        //}
-
-        //if (mousePos.x < transform.position.x)
-        //{
-        //    facingRight = false;
-        //    mousePos.x = -mousePos.x;
-        //}
-        //else
-        //{
-        //    facingRight = true;
-        //}
-
-        //if (!facingRight)
-        //{
-        //    minLookX = -minLookX;           
-        //}
-
-        //if (aimDir.x < minLookX)
-        //{
-        //    aimDir.x = minLookX;
-        //}
-
         head.transform.right = aimDir;
     }
+
+    void StopAim()
+    {
+        aim.enabled = false;
+    }
+
 
     void DrawAim()
     {
