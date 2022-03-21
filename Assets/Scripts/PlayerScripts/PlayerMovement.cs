@@ -67,11 +67,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.velocity = new Vector2(movInput * speed, rb.velocity.y);
 
-                if (movInput > 0)
+                if (movInput < 0)
                 {
                     transform.eulerAngles = new Vector3(0, -180, 0);
                 }
-                else if (movInput < 0)
+                else if (movInput > 0)
                 {
                     transform.eulerAngles = new Vector3(0, 0, 0);
                 }

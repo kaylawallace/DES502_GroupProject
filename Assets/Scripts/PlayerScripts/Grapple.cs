@@ -67,10 +67,10 @@ public class Grapple : MonoBehaviour
 
     private void LateUpdate()
     {
+        Aim();
         //DrawAim();
         if (Input.GetKey(KeyCode.Mouse1))
-        {
-            Aim();
+        {           
             DrawAim();
         }
         else if (Input.GetKeyUp(KeyCode.Mouse1))
