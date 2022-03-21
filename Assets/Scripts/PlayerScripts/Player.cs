@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private bool justDamaged;
     private float cooldown = 1f;
     private int health;
+    [SerializeField] private Transform respawnPoint;
 
     void Start()
     {
@@ -44,19 +45,42 @@ public class Player : MonoBehaviour
             if (health <= 0)
             {
                 health = 0;
-                Die();
+                Death();
             }
         }
-    }
-
-    private void Die()
-    {
-        Debug.Log("Player died");
     }
 
     public int GetHealth()
     {
         return health;
+    }
+
+    public void Death()
+    {
+        SetRendererActive(false);
+        StartCoroutine(Respawn());      
+    }
+
+    private IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(2f);
+        health = maxHealth;
+        gameObject.transform.position = respawnPoint.position;   
+        SetRendererActive(true);           
+        justDamaged = true;     
+    }
+
+    public void SetRendererActive(bool active)
+    {
+        SpriteRenderer[] renderers = gameObject.GetComponentsInChildren<SpriteRenderer>();
+
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (!string.Equals(renderers[i].name, "Tongue"))
+            {
+                renderers[i].enabled = active;           
+            }          
+        }       
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -66,7 +90,7 @@ public class Player : MonoBehaviour
             TakeDamage(1);
             GetComponent<PlayerMovement>().Knockback();
         }
-        else if (collision.CompareTag("Hazard"))
+        else if (collision.CompareTag("Hazard") || collision.CompareTag("Projectile"))
         {
             TakeDamage(1);
             GetComponent<PlayerMovement>().Knockback();
@@ -79,6 +103,10 @@ public class Player : MonoBehaviour
                 GetComponent<HealthUI>().UpdateHearts();
             }
             Destroy(collision.gameObject);
+        }
+        else if (collision.CompareTag("RespawnPoint"))
+        {
+            respawnPoint = collision.gameObject.transform;
         }
     }
 }

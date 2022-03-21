@@ -94,12 +94,12 @@ public class PlayerMovement : MonoBehaviour
                 if (movInput > 0)
                 {
                     rb.AddForce(new Vector2(1, 0) * swingForce);
-                    transform.eulerAngles = new Vector3(0, 180, 0);
+                    transform.eulerAngles = new Vector3(0, 0, 0);
                 }
                 else if (movInput < 0)
                 {
                     rb.AddForce(new Vector2(-1, 0) * swingForce);
-                    transform.eulerAngles = new Vector3(0, 0, 0);
+                    transform.eulerAngles = new Vector3(0, 180, 0);
                 }
             }
             else
@@ -152,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
     //    if (IsOnPlatform())
     //    {
     //        transform.parent =
-    //    }
+    //    }S
     //}
 
     public void Knockback()
@@ -161,12 +161,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (transform.rotation.eulerAngles.y == 180)
         {
-            Vector2 knockbackDir = new Vector2(-1, 0);
+            Vector2 knockbackDir = new Vector2(1, 0);
             rb.velocity = new Vector2(knockbackDir.x * knockbackForce, rb.velocity.y);
         }
         else if (transform.rotation.eulerAngles.y == 0)
         {
-            Vector2 knockbackDir = new Vector2(1, 0);
+            Vector2 knockbackDir = new Vector2(-1, 0);
             rb.velocity = new Vector2(knockbackDir.x * knockbackForce, rb.velocity.y);
         }
     }

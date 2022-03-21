@@ -16,6 +16,7 @@ TagManager:
   - Projectile
   - Hazard
   - Platform
+  - RespawnPoint
   layers:
   - Default
   - TransparentFX
