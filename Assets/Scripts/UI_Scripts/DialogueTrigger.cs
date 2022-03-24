@@ -5,13 +5,19 @@ using UnityEngine;
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
+    public GameObject triggerBtn;
 
     public void TriggerDialogue()
     {
         FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void TriggerButton(bool active)
+    {
+        triggerBtn.SetActive(active);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
         Player plr = collision.GetComponent<Player>();
 
@@ -19,17 +25,31 @@ public class DialogueTrigger : MonoBehaviour
         {
             if (!plr.conversing)
             {
-                plr.conversing = true;
-                TriggerDialogue();
+                TriggerButton(true);
+                if (FindObjectOfType<DialogueManager>().triggerPressed)
+                {
+                    TriggerDialogue();
+                }
+            }
+            else
+            {
+                TriggerButton(false);
             }
         }
+    }
 
-        //if (collision.CompareTag("Player")) {
-        //    //if (!conversing)
-        //    //{
-        //    //    TriggerDialogue();
-        //    //}
-            
-        //}
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Player plr = collision.GetComponent<Player>();
+
+        if (plr)
+        {
+            if (!plr.conversing)
+            {
+                //plr.conversing = true;
+                //TriggerDialogue();
+                TriggerButton(false);
+            }
+        }
     }
 }

@@ -16,6 +16,7 @@ public class Grapple : MonoBehaviour
     private float minLookX = 2f, minLookY = -2f, maxLookY = 4f;
     private bool facingRight;
     [SerializeField] private float reelRate;
+    [SerializeField] private GameObject dialogueTriggerBtn;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +46,7 @@ public class Grapple : MonoBehaviour
             facingRight = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && (!dialogueTriggerBtn.activeSelf || gameObject.GetComponent<Player>().conversing))
         {
             StartGrapple();
         }

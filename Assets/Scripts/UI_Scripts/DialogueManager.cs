@@ -10,19 +10,24 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI nameTxt, dialogueTxt;
     private Queue<string> sentences;
     private Player plr;
+    public bool triggerPressed = false;
 
     void Start()
     {
-        //dialogueUI = GameObject.FindGameObjectWithTag("Dialogue");
         sentences = new Queue<string>();
         plr = FindObjectOfType<Player>();
+    }
+
+    public void SetActive()
+    {
+        triggerPressed = true;
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
         nameTxt.text = dialogue.name;
         sentences.Clear();
-
+        plr.conversing = true;
         dialogueUI.SetActive(true);
 
         for (int i = 0; i < dialogue.sentences.Length; i++)
@@ -49,7 +54,8 @@ public class DialogueManager : MonoBehaviour
     {
         Debug.Log("Ending conversation");
         dialogueUI.SetActive(false);
-        plr.conversing = false; 
+        plr.conversing = false;
+        triggerPressed = false;
     }
 
 }
