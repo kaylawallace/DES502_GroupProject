@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed, jumpForce, swingForce;
+    public float speed, jumpForce, minJumpForce, swingForce;
     public Transform feetPos;
     public float checkRadius;
     public float maxKnockbackTime;
@@ -28,6 +28,10 @@ public class PlayerMovement : MonoBehaviour
     {
         movInput = Input.GetAxis("Horizontal");
         Jump();
+        // if (jumping)
+        // {
+        //     ChargeJump();
+        // }
     }
 
     private void FixedUpdate()
@@ -111,17 +115,33 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
+        float prevMinJump = 5;
+        
         if (IsGrounded())
         {
             jumping = false;
+            minJumpForce = prevMinJump;
 
             if (Input.GetButtonDown("Jump"))
             {
-                jumping = true;
-                rb.velocity = Vector2.up * jumpForce;
-            }
+                jumping = true;  
+                rb.velocity = Vector2.up * jumpForce;                  
+            }       
+            else if (Input.GetButtonUp("Jump"))
+            {
+                jumping = false;
+            }   
         }
     }
+
+    // void ChargeJump()
+    // {
+    //     if (minJumpForce < jumpForce && Input.GetButton("Jump"))
+    //     {
+    //         minJumpForce += 0.1f;               
+    //         rb.velocity = Vector2.up * minJumpForce;    
+    //     }
+    // }
 
     bool IsGrounded()
     {

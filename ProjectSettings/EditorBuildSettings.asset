@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/Main.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 07ef36516fa63e84daf2169dfbbb4edb
   - enabled: 1
-    path: Assets/Scenes/HannahScene.unity
-    guid: 59d039a31cdaa294280a97f84cfcf2c6
+    path: Assets/Scenes/Level_Greybox.unity
+    guid: 8f4d1f6eff54211489b2df2480ba3fd0
+  - enabled: 1
+    path: Assets/Scenes/BossScene.unity
+    guid: fe33b4dc99a759e4b9132aebeefbb695
   m_configObjects: {}

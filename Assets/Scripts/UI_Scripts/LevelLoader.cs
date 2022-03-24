@@ -15,6 +15,8 @@ public class LevelLoader : MonoBehaviour
 
     IEnumerator LoadLevel(int levelIndex)
     {
+        print(SceneManager.GetActiveScene().buildIndex);
+        
         anim.SetTrigger("start");
 
         yield return new WaitForSeconds(transitionTime);
