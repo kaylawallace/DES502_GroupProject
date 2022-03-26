@@ -60,3 +60,6 @@ TagManager:
   - name: Enemy
     uniqueID: 2516478941
     locked: 0
+  - name: Tongue
+    uniqueID: 2608347323
+    locked: 0
