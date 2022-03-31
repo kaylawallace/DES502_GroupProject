@@ -124,13 +124,30 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetButtonDown("Jump"))
             {
-                jumping = true;  
-                rb.velocity = Vector2.up * jumpForce;                  
+                jumping = true;
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                print(rb.velocity);
+
+                if (rb.velocity.y < 0)
+                {
+                    rb.gravityScale = 6.5f;
+                }
+                else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
+                {
+                    rb.gravityScale = 9f;
+                }
+                else
+                {
+                    rb.gravityScale = 2.7f;
+                    jumping = false;
+                }
             }       
-            else if (Input.GetButtonUp("Jump"))
-            {
-                jumping = false;
-            }   
+            //else if (Input.GetButtonUp("Jump"))
+            //{
+            //    //jumping = false;
+            //}
+
+            
         }
     }
 
