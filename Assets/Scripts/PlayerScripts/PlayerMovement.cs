@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     {
         movInput = Input.GetAxis("Horizontal");
         Jump();
-        print(anim.GetInteger("state"));
+        //print(anim.GetInteger("state"));
         // if (jumping)
         // {
         //     ChargeJump();
@@ -132,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
                 jumping = true;
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 anim.SetInteger("state", 1);
-                print(rb.velocity.y);
+                //print(rb.velocity.y);
 
                 // print(rb.velocity);
                 if (rb.velocity.y < 0)
@@ -147,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 // rb.gravityScale = 6.5f;
                 anim.SetInteger("state", 2);
-                print(rb.velocity.y);
+                //print(rb.velocity.y);
 
             }
                 // else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
@@ -179,7 +179,7 @@ public class PlayerMovement : MonoBehaviour
     //     }
     // }
 
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         grounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
         return grounded;

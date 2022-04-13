@@ -55,7 +55,7 @@ public class Grapple : MonoBehaviour
         else if(Input.GetKeyUp(KeyCode.Mouse0))
         {
             StopGrapple();
-            anim.SetInteger("state", 1);
+            anim.SetInteger("state", 7);
         }
 
         if (distJoint.enabled)
@@ -128,11 +128,19 @@ public class Grapple : MonoBehaviour
                 rope.SetPosition(0, hitPoint);
                 rope.SetPosition(1, headPos);
                 distJoint.connectedAnchor = hitPoint;
+
+                if (controller.IsGrounded())
+                {
+                    float dist = Vector2.Distance(transform.position, hitPoint);
+                    print("here");
+                    distJoint.distance = dist * .6f;
+                }
+
                 distJoint.enabled = true;
                 rope.enabled = true;
                 grappling = true;
                 controller.isSwinging(grappling);
-                anim.SetInteger("state", 5);
+                anim.SetTrigger("swing");
             }
             else
             {
