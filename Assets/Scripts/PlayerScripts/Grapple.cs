@@ -7,6 +7,7 @@ public class Grapple : MonoBehaviour
     public Camera cam;
     public Transform head, firePos;
     public LayerMask grappleable;
+    public Animator anim; 
 
     private PlayerMovement controller; 
     private Vector2 mousePos, headPos, aimDir;
@@ -49,10 +50,12 @@ public class Grapple : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0) && (!dialogueTriggerBtn.activeSelf || gameObject.GetComponent<Player>().conversing))
         {
             StartGrapple();
+            
         }
         else if(Input.GetKeyUp(KeyCode.Mouse0))
         {
             StopGrapple();
+            anim.SetInteger("state", 1);
         }
 
         if (distJoint.enabled)
@@ -129,6 +132,7 @@ public class Grapple : MonoBehaviour
                 rope.enabled = true;
                 grappling = true;
                 controller.isSwinging(grappling);
+                anim.SetInteger("state", 5);
             }
             else
             {

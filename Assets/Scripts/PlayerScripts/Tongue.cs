@@ -10,6 +10,8 @@ public class Tongue : MonoBehaviour
     [HideInInspector] public bool attacking;
     public int damage;
 
+    public Animator anim;
+
     void Start()
     {
         renderer = GetComponent<SpriteRenderer>();
@@ -36,6 +38,7 @@ public class Tongue : MonoBehaviour
     IEnumerator Attack(float attackTime)
     {
         attacking = true;
+        anim.SetTrigger("attack");
         renderer.enabled = true;
         collider.enabled = true;
         yield return new WaitForSeconds(attackTime);

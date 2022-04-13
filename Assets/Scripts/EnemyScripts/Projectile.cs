@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         player = GameObject.Find("Player").transform;
-        target = new Vector2(player.position.x, player.position.y+.1f);
+        target = new Vector2(player.position.x, player.position.y+1.5f);
         dir = ((Vector3)target - transform.position).normalized;
     }
 

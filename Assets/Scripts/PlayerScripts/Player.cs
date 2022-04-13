@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     private int health;
     [SerializeField] private Transform respawnPoint;
 
+    public Animator anim;
+
     void Start()
     {
         health = maxHealth;
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour
             health -= damage;
 
             // Play hurt anim
+            anim.SetTrigger("hit");
 
             if (health <= 0)
             {

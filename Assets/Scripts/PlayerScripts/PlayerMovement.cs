@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     public float checkRadius;
     public float maxKnockbackTime;
 
+    public Animator anim;
+
     private Rigidbody2D rb;
     private float movInput;
     private float knockbackTime;
@@ -28,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     {
         movInput = Input.GetAxis("Horizontal");
         Jump();
+        print(anim.GetInteger("state"));
         // if (jumping)
         // {
         //     ChargeJump();
@@ -95,19 +98,21 @@ public class PlayerMovement : MonoBehaviour
         {
             if (movInput != 0)
             {
+                // anim.SetBool("swinging", true);
                 if (movInput > 0)
                 {
                     rb.AddForce(new Vector2(1, 0) * swingForce);
                     transform.eulerAngles = new Vector3(0, 0, 0);
                 }
                 else if (movInput < 0)
-                {
+                {                  
                     rb.AddForce(new Vector2(-1, 0) * swingForce);
                     transform.eulerAngles = new Vector3(0, 180, 0);
                 }
             }
             else
             {
+                // anim.SetBool("swinging", false);
                 return;
             }
         }
@@ -121,27 +126,41 @@ public class PlayerMovement : MonoBehaviour
         {
             jumping = false;
             minJumpForce = prevMinJump;
-
+            
             if (Input.GetButtonDown("Jump"))
             {
                 jumping = true;
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-                // print(rb.velocity);
+                anim.SetInteger("state", 1);
+                print(rb.velocity.y);
 
+                // print(rb.velocity);
                 if (rb.velocity.y < 0)
                 {
-                    rb.gravityScale = 6.5f;
+                    // rb.gravityScale = 6.5f;
+                    anim.SetInteger("state", 2);
+                    print(rb.velocity.y);
+
                 }
-                else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
-                {
-                    rb.gravityScale = 9f;
-                }
-                else
-                {
-                    rb.gravityScale = 2.7f;
-                    jumping = false;
-                }
-            }       
+            }
+            if (rb.velocity.y < 0)
+            {
+                // rb.gravityScale = 6.5f;
+                anim.SetInteger("state", 2);
+                print(rb.velocity.y);
+
+            }
+                // else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
+                // {
+                //     rb.gravityScale = 9f;
+                // }
+                // else
+                // {
+                //     // rb.gravityScale = 2.7f;
+                //     // anim.SetInteger("state", 2);
+                //     jumping = false;
+                // }
+                  
             //else if (Input.GetButtonUp("Jump"))
             //{
             //    //jumping = false;
