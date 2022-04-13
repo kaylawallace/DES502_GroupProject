@@ -126,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 jumping = true;
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-                print(rb.velocity);
+                // print(rb.velocity);
 
                 if (rb.velocity.y < 0)
                 {
