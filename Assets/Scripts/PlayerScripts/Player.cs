@@ -16,6 +16,19 @@ public class Player : MonoBehaviour
 
     public Animator anim;
 
+    //public enum ePlayerState {
+    //    Idle, 
+    //    Walk,
+    //    Attack,
+    //    Swing,
+    //    SwingLand,
+    //    Jump,
+    //    JumpLand,
+    //    Hurt,
+    //    Dead
+    //}
+    //public ePlayerState currState;
+
     void Start()
     {
         health = maxHealth;
