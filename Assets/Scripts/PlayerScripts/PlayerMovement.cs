@@ -30,11 +30,6 @@ public class PlayerMovement : MonoBehaviour
     {
         movInput = Input.GetAxis("Horizontal");
         Jump();
-        //print(anim.GetInteger("state"));
-        // if (jumping)
-        // {
-        //     ChargeJump();
-        // }
     }
 
     private void FixedUpdate()
@@ -64,32 +59,29 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
+
+
     }
 
     private void Move()
     {
-        //if (isGrounded())
-        //{
-            if (movInput != 0)
-            {
-                rb.velocity = new Vector2(movInput * speed, rb.velocity.y);
+        if (movInput != 0)
+        {
+            rb.velocity = new Vector2(movInput * speed, rb.velocity.y);
 
-                if (movInput < 0)
-                {
-                    transform.eulerAngles = new Vector3(0, -180, 0);
-                }
-                else if (movInput > 0)
-                {
-                    transform.eulerAngles = new Vector3(0, 0, 0);
-                }
-            }
-            else
+            if (movInput < 0)
             {
-                return;
+                transform.eulerAngles = new Vector3(0, -180, 0);
             }
-        //}
-
-       
+            else if (movInput > 0)
+            {
+                transform.eulerAngles = new Vector3(0, 0, 0);
+            }
+        }
+        else
+        {
+            return;
+        }      
     }
 
     public void Swing()
@@ -119,65 +111,43 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Jump()
-    {
-        float prevMinJump = 5;
-        
-        if (IsGrounded())
+    {           
+        if (Input.GetButtonDown("Jump") && IsGrounded())
+        {
+            jumping = true;
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            anim.SetInteger("state", 1);
+        }
+        else if (Input.GetButtonUp("Jump"))
+        {
+            if (rb.velocity.y > 0)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            }          
+        }
+        else if (IsGrounded())
         {
             jumping = false;
-            minJumpForce = prevMinJump;
-            
-            if (Input.GetButtonDown("Jump"))
-            {
-                jumping = true;
-                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-                anim.SetInteger("state", 1);
-                //print(rb.velocity.y);
+        }
+        else if (rb.velocity.y < 0)
+        {
+            anim.SetInteger("state", 2);
+        }
 
-                // print(rb.velocity);
-                if (rb.velocity.y < 0)
-                {
-                    // rb.gravityScale = 6.5f;
-                    anim.SetInteger("state", 2);
-                    print(rb.velocity.y);
 
-                }
-            }
-            if (rb.velocity.y < 0)
-            {
-                // rb.gravityScale = 6.5f;
-                anim.SetInteger("state", 2);
-                //print(rb.velocity.y);
-
-            }
-                // else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
-                // {
-                //     rb.gravityScale = 9f;
-                // }
-                // else
-                // {
-                //     // rb.gravityScale = 2.7f;
-                //     // anim.SetInteger("state", 2);
-                //     jumping = false;
-                // }
-                  
-            //else if (Input.GetButtonUp("Jump"))
-            //{
-            //    //jumping = false;
-            //}
-
-            
+        if (rb.velocity.y > 0 && !IsGrounded())
+        {
+            anim.SetInteger("state", 1);
+        }
+        else if (rb.velocity.y < 0 && !IsGrounded())
+        {
+            anim.SetInteger("state", 2);
+        }
+        else if (IsGrounded() && (anim.GetInteger("state") == 2 || anim.GetInteger("state") == 1))
+        {
+            anim.SetInteger("state", 8);
         }
     }
-
-    // void ChargeJump()
-    // {
-    //     if (minJumpForce < jumpForce && Input.GetButton("Jump"))
-    //     {
-    //         minJumpForce += 0.1f;               
-    //         rb.velocity = Vector2.up * minJumpForce;    
-    //     }
-    // }
 
     public bool IsGrounded()
     {
@@ -202,14 +172,6 @@ public class PlayerMovement : MonoBehaviour
             return swinging = false;
         }
     }
-
-    //void OnPlatform()
-    //{
-    //    if (IsOnPlatform())
-    //    {
-    //        transform.parent =
-    //    }S
-    //}
 
     public void Knockback()
     {

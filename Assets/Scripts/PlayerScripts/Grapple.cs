@@ -18,6 +18,7 @@ public class Grapple : MonoBehaviour
     private bool facingRight;
     [SerializeField] private float reelRate;
     [SerializeField] private GameObject dialogueTriggerBtn;
+    private GameObject slobberEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class Grapple : MonoBehaviour
         rope = GetComponent<LineRenderer>();
         distJoint = GetComponent<DistanceJoint2D>();
         controller = GetComponentInParent<PlayerMovement>();
+        slobberEffect = GameObject.Find("Spit");
         distJoint.enabled = false;
         rope.enabled = false;
         aim.enabled = true;
@@ -119,7 +121,10 @@ public class Grapple : MonoBehaviour
     void StartGrapple()
     {
         RaycastHit2D ray = Physics2D.Raycast(transform.position, aimDir, 20f, grappleable);
-        
+
+        GameObject newSlobber = (Instantiate(slobberEffect, firePos.position, Quaternion.identity));
+        newSlobber.transform.parent = transform.parent;
+
         if (ray)
         {
             if (ray.collider.CompareTag("Grappleable"))

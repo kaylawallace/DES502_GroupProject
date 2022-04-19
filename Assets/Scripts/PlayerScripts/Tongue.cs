@@ -8,7 +8,9 @@ public class Tongue : MonoBehaviour
     private SpriteRenderer renderer;
     private BoxCollider2D collider;
     [HideInInspector] public bool attacking;
+    public GameObject slobberEffect;
     public int damage;
+    public Transform firePoint;
 
     public Animator anim;
 
@@ -39,6 +41,9 @@ public class Tongue : MonoBehaviour
     {
         attacking = true;
         anim.SetTrigger("attack");
+        GameObject newSlobber = (Instantiate(slobberEffect, firePoint.position, Quaternion.identity));
+        newSlobber.transform.parent = transform.parent.parent.parent;
+        Destroy(newSlobber, 2f);
         renderer.enabled = true;
         collider.enabled = true;
         yield return new WaitForSeconds(attackTime);
