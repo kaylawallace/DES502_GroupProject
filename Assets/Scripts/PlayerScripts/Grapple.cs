@@ -132,7 +132,7 @@ public class Grapple : MonoBehaviour
                 if (controller.IsGrounded())
                 {
                     float dist = Vector2.Distance(transform.position, hitPoint);
-                    print("here");
+                    //print("here");
                     distJoint.distance = dist * .6f;
                 }
 
