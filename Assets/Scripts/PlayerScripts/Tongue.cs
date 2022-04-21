@@ -40,7 +40,9 @@ public class Tongue : MonoBehaviour
     IEnumerator Attack(float attackTime)
     {
         attacking = true;
+        //int state = anim.GetInteger("state");
         anim.SetTrigger("attack");
+        //anim.SetInteger("state", state);
         GameObject newSlobber = (Instantiate(slobberEffect, firePoint.position, Quaternion.identity));
         newSlobber.transform.parent = transform.parent.parent.parent;
         Destroy(newSlobber, 2f);

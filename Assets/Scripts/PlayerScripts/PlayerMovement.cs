@@ -137,17 +137,17 @@ public class PlayerMovement : MonoBehaviour
         {
             //jumping = false;
         }
-        else if (rb.velocity.y < 0)
+        else if (rb.velocity.y < 0 && !swinging)
         {
             anim.SetInteger("state", 3);
         }
 
 
-        if (rb.velocity.y > 0 && !IsGrounded())
+        if (rb.velocity.y > 0 && !IsGrounded() && !swinging)
         {
             anim.SetInteger("state", 2);
         }
-        else if (rb.velocity.y < 0 && !IsGrounded())
+        else if (rb.velocity.y < 0 && !IsGrounded() && !swinging)
         {
             anim.SetInteger("state", 3);
         }

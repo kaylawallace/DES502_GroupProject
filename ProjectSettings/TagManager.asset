@@ -51,6 +51,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: VeryBack
+    uniqueID: 1821374057
+    locked: 0
   - name: Background
     uniqueID: 1448230791
     locked: 0

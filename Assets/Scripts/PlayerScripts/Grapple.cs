@@ -122,8 +122,7 @@ public class Grapple : MonoBehaviour
     {
         RaycastHit2D ray = Physics2D.Raycast(transform.position, aimDir, 20f, grappleable);
 
-        GameObject newSlobber = (Instantiate(slobberEffect, firePos.position, Quaternion.identity));
-        newSlobber.transform.parent = transform.parent;
+       
 
         if (ray)
         {
@@ -133,6 +132,9 @@ public class Grapple : MonoBehaviour
                 rope.SetPosition(0, hitPoint);
                 rope.SetPosition(1, headPos);
                 distJoint.connectedAnchor = hitPoint;
+
+                GameObject newSlobber = (Instantiate(slobberEffect, firePos.position, Quaternion.identity));
+                newSlobber.transform.parent = transform.parent;
 
                 if (controller.IsGrounded())
                 {

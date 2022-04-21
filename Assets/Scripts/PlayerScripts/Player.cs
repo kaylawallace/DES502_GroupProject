@@ -56,7 +56,9 @@ public class Player : MonoBehaviour
             health -= damage;
 
             // Play hurt anim
+            //int state = anim.GetInteger("state");
             anim.SetTrigger("hit");
+            //anim.SetInteger("state", state);
 
             if (health <= 0)
             {
