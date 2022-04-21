@@ -59,8 +59,6 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-
-
     }
 
     private void Move()
@@ -68,6 +66,11 @@ public class PlayerMovement : MonoBehaviour
         if (movInput != 0)
         {
             rb.velocity = new Vector2(movInput * speed, rb.velocity.y);
+
+            if (!jumping)
+            {
+                anim.SetInteger("state", 1);
+            }
 
             if (movInput < 0)
             {
@@ -80,6 +83,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            if (!jumping && IsGrounded())
+            {
+                anim.SetInteger("state", 0);
+            }
             return;
         }      
     }
@@ -116,36 +123,38 @@ public class PlayerMovement : MonoBehaviour
         {
             jumping = true;
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            anim.SetInteger("state", 1);
+            anim.SetInteger("state", 2);
         }
         else if (Input.GetButtonUp("Jump"))
         {
             if (rb.velocity.y > 0)
             {
+                jumping = true;
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             }          
         }
         else if (IsGrounded())
         {
-            jumping = false;
+            //jumping = false;
         }
         else if (rb.velocity.y < 0)
         {
-            anim.SetInteger("state", 2);
+            anim.SetInteger("state", 3);
         }
 
 
         if (rb.velocity.y > 0 && !IsGrounded())
         {
-            anim.SetInteger("state", 1);
+            anim.SetInteger("state", 2);
         }
         else if (rb.velocity.y < 0 && !IsGrounded())
         {
-            anim.SetInteger("state", 2);
+            anim.SetInteger("state", 3);
         }
-        else if (IsGrounded() && (anim.GetInteger("state") == 2 || anim.GetInteger("state") == 1))
+        else if (IsGrounded() && (anim.GetInteger("state") == 2 || anim.GetInteger("state") == 3))
         {
-            anim.SetInteger("state", 8);
+            jumping = false;
+            anim.SetInteger("state", 4);
         }
     }
 
