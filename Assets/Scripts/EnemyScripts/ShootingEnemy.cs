@@ -9,12 +9,14 @@ public class ShootingEnemy : MonoBehaviour
     GameObject target;
     [SerializeField] float shootDist; 
     float currShotTime, maxShotTime = 2f;
+    private Animator anim; 
     
     // Start is called before the first frame update
     void Start()
     {
         target = GameObject.Find("Player");
         currShotTime = maxShotTime;
+        anim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -25,6 +27,7 @@ public class ShootingEnemy : MonoBehaviour
             if (currShotTime <= 0)
             {
                 Instantiate(projectile, transform.position, Quaternion.identity);
+                anim.SetTrigger("shoot");
                 currShotTime = maxShotTime; 
             }
             else
