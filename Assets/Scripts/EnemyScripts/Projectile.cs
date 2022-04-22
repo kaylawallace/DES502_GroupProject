@@ -47,6 +47,9 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject);
         }
 
+        GameObject newHit = Instantiate(hitEffect, gameObject.transform.position, Quaternion.identity);
+        Destroy(newHit, 2f);
         Destroy(gameObject, 3f);
+        
     }
 }

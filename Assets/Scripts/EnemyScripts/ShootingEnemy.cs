@@ -8,7 +8,7 @@ public class ShootingEnemy : MonoBehaviour
     
     GameObject target;
     [SerializeField] float shootDist; 
-    float currShotTime, maxShotTime = 2f;
+    float currShotTime, maxShotTime = 3f;
     private Animator anim; 
     
     // Start is called before the first frame update
