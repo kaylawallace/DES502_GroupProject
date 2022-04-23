@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private float cooldown = 1f;
     private int health;
     [SerializeField] private Transform respawnPoint;
+    private GameObject sprite; 
 
     public Animator anim;
 
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour
     {
         health = maxHealth;
         tongue = GetComponentInChildren<Tongue>();
+        sprite = GameObject.Find("Bones_Anim");
     }
 
     private void Update()
@@ -90,15 +92,7 @@ public class Player : MonoBehaviour
 
     public void SetRendererActive(bool active)
     {
-        SpriteRenderer[] renderers = gameObject.GetComponentsInChildren<SpriteRenderer>();
-
-        for (int i = 0; i < renderers.Length; i++)
-        {
-            if (!string.Equals(renderers[i].name, "Tongue"))
-            {
-                renderers[i].enabled = active;           
-            }          
-        }       
+        sprite.SetActive(active);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

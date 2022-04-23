@@ -7,7 +7,8 @@ public class Grapple : MonoBehaviour
     public Camera cam;
     public Transform head, firePos;
     public LayerMask grappleable;
-    public Animator anim; 
+    public Animator anim;
+    public GameObject headSprite;
 
     private PlayerMovement controller; 
     private Vector2 mousePos, headPos, aimDir;
@@ -40,14 +41,14 @@ public class Grapple : MonoBehaviour
     {
         //Aim();
 
-        if (transform.rotation.y == 180)
-        {
-            facingRight = false;
-        }
-        else
-        {
-            facingRight = true;
-        }
+        //if (transform.rotation.y == 180)
+        //{
+        //    facingRight = false;
+        //}
+        //else
+        //{
+        //    facingRight = true;
+        //}
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && (!dialogueTriggerBtn.activeSelf || gameObject.GetComponent<Player>().conversing))
         {
@@ -60,10 +61,7 @@ public class Grapple : MonoBehaviour
             anim.SetInteger("state", 7);
         }
 
-        if (distJoint.enabled)
-        {
-            rope.SetPosition(1, firePos.transform.position);
-        }
+       
 
         if (grappling)
         {
@@ -82,6 +80,11 @@ public class Grapple : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             StopAim();
+        }
+
+        if (distJoint.enabled)
+        {
+            rope.SetPosition(1, new Vector3(firePos.transform.position.x, firePos.transform.position.y, -0.1f));
         }
     }
 
@@ -129,12 +132,18 @@ public class Grapple : MonoBehaviour
             if (ray.collider.CompareTag("Grappleable"))
             {
                 Vector2 hitPoint = ray.point;
-                rope.SetPosition(0, hitPoint);
-                rope.SetPosition(1, headPos);
+                rope.SetPosition(0, new Vector3(hitPoint.x, hitPoint.y, -.1f));
+                rope.SetPosition(1, new Vector3(headPos.x, headPos.y, -.1f));
+                print(new Vector3(headPos.x, headPos.y, -.1f));
+                print(rope.GetPosition(1));
                 distJoint.connectedAnchor = hitPoint;
 
                 GameObject newSlobber = (Instantiate(slobberEffect, firePos.position, Quaternion.identity));
                 newSlobber.transform.parent = transform.parent;
+
+                headPos = headSprite.transform.position;
+                aimDir = hitPoint - headPos;
+                headSprite.transform.right = aimDir;
 
                 if (controller.IsGrounded())
                 {

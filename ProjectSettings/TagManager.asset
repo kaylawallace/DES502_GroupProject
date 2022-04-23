@@ -60,6 +60,9 @@ TagManager:
   - name: NPC
     uniqueID: 2026578667
     locked: 0
+  - name: Tongue2
+    uniqueID: 3052034403
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
