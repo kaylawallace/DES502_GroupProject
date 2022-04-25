@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private float movInput;
     private float knockbackTime;
-    private bool grounded = false, jumping = false, swinging = false, knocked = false, isOnPlatform = false;
+    private bool grounded = false, jumping = false, swinging = false, knocked = false, isOnPlatform = false, facingRight = true;
     [SerializeField] private LayerMask whatIsGround, whatIsPlatform;
     [SerializeField] private float knockbackForce;
 
@@ -75,10 +75,12 @@ public class PlayerMovement : MonoBehaviour
             if (movInput < 0)
             {
                 transform.eulerAngles = new Vector3(0, -180, 0);
+                facingRight = false;
             }
             else if (movInput > 0)
             {
                 transform.eulerAngles = new Vector3(0, 0, 0);
+                facingRight = true;
             }
         }
         else
@@ -102,11 +104,13 @@ public class PlayerMovement : MonoBehaviour
                 {
                     rb.AddForce(new Vector2(1, 0) * swingForce);
                     transform.eulerAngles = new Vector3(0, 0, 0);
+                    facingRight = true;
                 }
                 else if (movInput < 0)
                 {                  
                     rb.AddForce(new Vector2(-1, 0) * swingForce);
                     transform.eulerAngles = new Vector3(0, 180, 0);
+                    facingRight = false;
                 }
             }
             else
@@ -157,6 +161,16 @@ public class PlayerMovement : MonoBehaviour
             anim.SetInteger("state", 4);
         }
     }
+
+    public bool IsFacingRight()
+    {
+        return facingRight;
+    }
+
+    //private void SetFacingRight(bool _facingRight)
+    //{
+    //    facingRight = _facingRight;
+    //}
 
     public bool IsGrounded()
     {

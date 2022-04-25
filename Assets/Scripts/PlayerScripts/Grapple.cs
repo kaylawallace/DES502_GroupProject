@@ -95,6 +95,8 @@ public class Grapple : MonoBehaviour
         aimDir = mousePos - headPos;
 
         head.transform.right = aimDir;
+
+        //if (head.rotation.eulerAngles.z )
     }
 
     void StopAim()

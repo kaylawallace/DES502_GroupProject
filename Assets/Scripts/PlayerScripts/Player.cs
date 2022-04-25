@@ -56,11 +56,7 @@ public class Player : MonoBehaviour
         {
             justDamaged = true;
             health -= damage;
-
-            // Play hurt anim
-            //int state = anim.GetInteger("state");
             anim.SetTrigger("hit");
-            //anim.SetInteger("state", state);
 
             if (health <= 0)
             {
@@ -85,7 +81,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         health = maxHealth;
-        gameObject.transform.position = respawnPoint.position;   
+        gameObject.transform.SetPositionAndRotation(respawnPoint.position, Quaternion.identity);
         SetRendererActive(true);           
         justDamaged = true;     
     }
@@ -102,7 +98,12 @@ public class Player : MonoBehaviour
             TakeDamage(1);
             GetComponent<PlayerMovement>().Knockback();
         }
-        else if (collision.CompareTag("Hazard") || collision.CompareTag("Projectile"))
+        else if (collision.CompareTag("Hazard"))
+        {
+            TakeDamage(3);
+            GetComponent<PlayerMovement>().Knockback();
+        }
+        else if (collision.CompareTag("Projectile"))
         {
             TakeDamage(1);
             GetComponent<PlayerMovement>().Knockback();
