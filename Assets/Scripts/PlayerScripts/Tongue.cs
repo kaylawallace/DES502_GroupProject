@@ -99,6 +99,7 @@ public class Tongue : MonoBehaviour
 
     IEnumerator Attack(float attackTime)
     {
+        
         attacking = true;
         anim.SetTrigger("attack");
 
@@ -108,13 +109,15 @@ public class Tongue : MonoBehaviour
         aimDir.Normalize();
 
         float zRot = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;
-
+        
+        head.transform.rotation = Quaternion.Euler(0, 0, 0);
         head.transform.rotation = Quaternion.Euler(0, 0, zRot);
+        print(zRot);
 
-        //if (!controller.IsFacingRight())
-        //{
-        //    transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z);
-        //}
+        if (!controller.IsFacingRight())
+        {
+           transform.position = new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z);
+        }
 
 
         if (zRot < -90 || zRot > 90)
@@ -128,7 +131,7 @@ public class Tongue : MonoBehaviour
             else
             {
                 //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-                head.localRotation = Quaternion.Euler(180, 180, zRot-20);
+                head.localRotation = Quaternion.Euler(180, 180, zRot);
             }
         }
 
@@ -176,11 +179,12 @@ public class Tongue : MonoBehaviour
         yield return new WaitForSeconds(attackTime);
         //renderer.enabled = false;
         collider.enabled = false;
+        
 
-        //if (!controller.IsFacingRight())
-        //{
-        //    transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
-        //}
+        if (!controller.IsFacingRight())
+        {
+           transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+        }
 
         attacking = false;
     }

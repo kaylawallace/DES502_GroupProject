@@ -137,16 +137,20 @@ public class Grapple : MonoBehaviour
                 Vector2 hitPoint = ray.point;
                 rope.SetPosition(0, new Vector3(hitPoint.x, hitPoint.y, -.1f));
                 rope.SetPosition(1, new Vector3(headPos.x, headPos.y, -.1f));
-                print(new Vector3(headPos.x, headPos.y, -.1f));
-                print(rope.GetPosition(1));
+                // print(new Vector3(headPos.x, headPos.y, -.1f));
+                // print(rope.GetPosition(1));
                 distJoint.connectedAnchor = hitPoint;
 
                 GameObject newSlobber = (Instantiate(slobberEffect, firePos.position, Quaternion.identity));
                 newSlobber.transform.parent = transform.parent;
+                GameObject newTongueAnim = (Instantiate(tongueAnim, firePos.position, transform.rotation));
+                newTongueAnim.transform.parent = transform.parent;
+                Destroy(newTongueAnim, 0.3f);
+                Destroy(newSlobber, 1f);
 
                 headPos = headSprite.transform.position;
                 aimDir = hitPoint - headPos;
-                headSprite.transform.right = aimDir;
+                //headSprite.transform.right = aimDir;
 
                 if (controller.IsGrounded())
                 {
