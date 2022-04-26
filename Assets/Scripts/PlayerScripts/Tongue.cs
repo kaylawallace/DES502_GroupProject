@@ -15,6 +15,7 @@ public class Tongue : MonoBehaviour
     public Transform head;
 
     public Animator anim;
+    public GameObject tongueAnim;
 
     void Start()
     {
@@ -107,23 +108,29 @@ public class Tongue : MonoBehaviour
 
         head.transform.rotation = Quaternion.Euler(0, 0, zRot);
 
-        if (!controller.IsFacingRight())
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z);
-        }
+        //if (!controller.IsFacingRight())
+        //{
+        //    transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z);
+        //}
 
 
         if (zRot < -90 || zRot > 90)
         {
             if (controller.IsFacingRight())
             {
+                //print("here");
+                //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
                 head.localRotation = Quaternion.Euler(180, 0, zRot);
             }
             else
             {
+                //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
                 head.localRotation = Quaternion.Euler(180, 180, zRot-20);
             }
         }
+
+        //print(zRot);
+        //print(head.localRotation.eulerAngles);
 
         //PlayerMovement.IsFacingRight()
         //if (controller.IsFacingRight())
@@ -142,19 +149,34 @@ public class Tongue : MonoBehaviour
         //    //print(zRot);
         //}
 
-        GameObject newSlobber = (Instantiate(slobberEffect, firePoint.position, Quaternion.identity));
+        Quaternion animRot;
+
+        if (controller.IsFacingRight())
+        {
+            animRot = Quaternion.Euler(head.localRotation.eulerAngles.x, 180, head.localRotation.eulerAngles.z);
+        }
+        else
+        {
+            animRot = Quaternion.Euler(head.localRotation.eulerAngles.x, 0, head.localRotation.eulerAngles.z);
+        }
+
+
+        GameObject newTongueAnim = (Instantiate(tongueAnim, transform.position, animRot));
+        newTongueAnim.transform.parent = transform.parent;
+        Destroy(newTongueAnim, .7f);
+        GameObject newSlobber = (Instantiate(slobberEffect, transform.position, Quaternion.identity));
         newSlobber.transform.parent = transform.parent.parent.parent;
         Destroy(newSlobber, 2f);
-        renderer.enabled = true;
+        //renderer.enabled = true;
         collider.enabled = true;
         yield return new WaitForSeconds(attackTime);
-        renderer.enabled = false;
+        //renderer.enabled = false;
         collider.enabled = false;
 
-        if (!controller.IsFacingRight())
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
-        }
+        //if (!controller.IsFacingRight())
+        //{
+        //    transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
+        //}
 
         attacking = false;
     }

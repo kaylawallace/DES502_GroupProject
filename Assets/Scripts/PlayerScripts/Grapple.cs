@@ -20,6 +20,7 @@ public class Grapple : MonoBehaviour
     [SerializeField] private float reelRate;
     [SerializeField] private GameObject dialogueTriggerBtn;
     private GameObject slobberEffect;
+    public GameObject tongueAnim;
 
     // Start is called before the first frame update
     void Start()
@@ -58,7 +59,7 @@ public class Grapple : MonoBehaviour
         else if(Input.GetKeyUp(KeyCode.Mouse0))
         {
             StopGrapple();
-            anim.SetInteger("state", 7);
+            
         }
 
        
@@ -127,8 +128,6 @@ public class Grapple : MonoBehaviour
     {
         RaycastHit2D ray = Physics2D.Raycast(transform.position, aimDir, 20f, grappleable);
 
-       
-
         if (ray)
         {
             if (ray.collider.CompareTag("Grappleable"))
@@ -173,6 +172,7 @@ public class Grapple : MonoBehaviour
 
     void StopGrapple()
     {
+        anim.SetTrigger("swing_land");
         distJoint.enabled = false;
         rope.enabled = false;
         grappling = false;
