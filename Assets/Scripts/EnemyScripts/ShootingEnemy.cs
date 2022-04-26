@@ -9,7 +9,8 @@ public class ShootingEnemy : MonoBehaviour
     GameObject target;
     [SerializeField] float shootDist; 
     float currShotTime, maxShotTime = 3f;
-    private Animator anim; 
+    private Animator anim;
+    private AudioManager am;
     
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,7 @@ public class ShootingEnemy : MonoBehaviour
         target = GameObject.Find("Player");
         currShotTime = maxShotTime;
         anim = GetComponentInChildren<Animator>();
+        am = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -27,6 +29,7 @@ public class ShootingEnemy : MonoBehaviour
             if (currShotTime <= 0)
             {
                 Instantiate(projectile, transform.position, Quaternion.identity);
+                am.Play("PlantDeathSound");
                 anim.SetTrigger("shoot");
                 currShotTime = maxShotTime; 
             }

@@ -11,11 +11,13 @@ public class DialogueManager : MonoBehaviour
     private Queue<string> sentences;
     private Player plr;
     public bool triggerPressed = false;
+    private AudioManager am;
 
     void Start()
     {
         sentences = new Queue<string>();
         plr = FindObjectOfType<Player>();
+        am = FindObjectOfType<AudioManager>();
     }
 
     public void SetActive()
@@ -29,6 +31,7 @@ public class DialogueManager : MonoBehaviour
         sentences.Clear();
         plr.conversing = true;
         dialogueUI.SetActive(true);
+        am.Play("FrogCroakSound");
 
         for (int i = 0; i < dialogue.sentences.Length; i++)
         {

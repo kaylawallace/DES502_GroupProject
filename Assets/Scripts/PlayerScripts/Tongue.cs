@@ -16,6 +16,7 @@ public class Tongue : MonoBehaviour
 
     public Animator anim;
     public GameObject tongueAnim;
+    private AudioManager am;
 
     void Start()
     {
@@ -24,6 +25,8 @@ public class Tongue : MonoBehaviour
 
         renderer.enabled = false;
         collider.enabled = false;
+
+        am = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -167,6 +170,7 @@ public class Tongue : MonoBehaviour
         GameObject newSlobber = (Instantiate(slobberEffect, transform.position, Quaternion.identity));
         newSlobber.transform.parent = transform.parent.parent.parent;
         Destroy(newSlobber, 2f);
+        am.Play("AttackSound");
         //renderer.enabled = true;
         collider.enabled = true;
         yield return new WaitForSeconds(attackTime);

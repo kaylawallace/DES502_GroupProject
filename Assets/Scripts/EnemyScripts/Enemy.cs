@@ -9,10 +9,13 @@ public class Enemy : MonoBehaviour
     private int currHealth;
     private bool justDamaged = false;
     private float damageCooldown, maxDamageCooldown = .8f;
+    private AudioManager am;
 
 
     private void Start()
     {
+        am = FindObjectOfType<AudioManager>();
+
         damageCooldown = maxDamageCooldown;
         currHealth = maxHealth;
     }
@@ -48,6 +51,15 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        if (gameObject.GetComponent<ShootingEnemy>())
+        {
+            am.Play("PlantDeathSound");
+        }
+        else if (gameObject.GetComponent<PatrollerEnemy>())
+        {
+            am.Play("BirdDeathSound");
+        }
+
         Destroy(gameObject);
     }
 

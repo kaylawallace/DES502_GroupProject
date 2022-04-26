@@ -21,6 +21,7 @@ public class Grapple : MonoBehaviour
     [SerializeField] private GameObject dialogueTriggerBtn;
     private GameObject slobberEffect;
     public GameObject tongueAnim;
+    private AudioManager am;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,7 @@ public class Grapple : MonoBehaviour
         distJoint = GetComponent<DistanceJoint2D>();
         controller = GetComponentInParent<PlayerMovement>();
         slobberEffect = GameObject.Find("Spit");
+        am = FindObjectOfType<AudioManager>();
         distJoint.enabled = false;
         rope.enabled = false;
         aim.enabled = true;
@@ -54,12 +56,12 @@ public class Grapple : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0) && (!dialogueTriggerBtn.activeSelf || gameObject.GetComponent<Player>().conversing))
         {
             StartGrapple();
-            
+            am.Play("SwingSound");
         }
         else if(Input.GetKeyUp(KeyCode.Mouse0))
         {
             StopGrapple();
-            
+            am.Stop("SwingSound");
         }
 
        

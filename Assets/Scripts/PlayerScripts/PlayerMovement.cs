@@ -17,11 +17,13 @@ public class PlayerMovement : MonoBehaviour
     private bool grounded = false, jumping = false, swinging = false, knocked = false, isOnPlatform = false, facingRight = true;
     [SerializeField] private LayerMask whatIsGround, whatIsPlatform;
     [SerializeField] private float knockbackForce;
+    private AudioManager am;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        am = FindObjectOfType<AudioManager>();
         knockbackTime = maxKnockbackTime;
     }
 
@@ -30,6 +32,11 @@ public class PlayerMovement : MonoBehaviour
     {
         movInput = Input.GetAxis("Horizontal");
         Jump();
+
+        if (swinging || jumping || knocked)
+        {
+            am.Stop("WalkSound");
+        }
     }
 
     private void FixedUpdate()
@@ -66,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
         if (movInput != 0)
         {
             rb.velocity = new Vector2(movInput * speed, rb.velocity.y);
+            am.Play("WalkSound");
 
             if (!jumping)
             {
@@ -85,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            am.Stop("WalkSound");
             if (!jumping && IsGrounded())
             {
                 anim.SetInteger("state", 0);
@@ -97,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (swinging)
         {
+            am.Stop("WalkSound");
             if (movInput != 0)
             {
                 // anim.SetBool("swinging", true);
@@ -124,10 +134,11 @@ public class PlayerMovement : MonoBehaviour
     void Jump()
     {           
         if (Input.GetButtonDown("Jump") && IsGrounded())
-        {
+        {    
             jumping = true;
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             anim.SetInteger("state", 2);
+            am.Play("JumpSound");
         }
         else if (Input.GetButtonUp("Jump"))
         {
