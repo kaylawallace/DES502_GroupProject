@@ -75,3 +75,6 @@ TagManager:
   - name: Tongue
     uniqueID: 2608347323
     locked: 0
+  - name: Foreground
+    uniqueID: 1590414133
+    locked: 0
