@@ -10,10 +10,12 @@ public class Player : MonoBehaviour
 
     Tongue tongue;
     private bool justDamaged;
+    private bool invisible;
     private float cooldown = 1f;
     private int health;
     [SerializeField] private Transform respawnPoint;
-    private GameObject sprite; 
+    private GameObject sprite;
+    private CamouflageAbility camo;
 
     public Animator anim;
 
@@ -35,6 +37,7 @@ public class Player : MonoBehaviour
         health = maxHealth;
         tongue = GetComponentInChildren<Tongue>();
         sprite = GameObject.Find("Bones_Anim");
+        camo = GetComponent<CamouflageAbility>();
     }
 
     private void Update()
@@ -77,6 +80,18 @@ public class Player : MonoBehaviour
         StartCoroutine(Respawn());      
     }
 
+    public void SetInvisible(bool _invisible)
+    {
+        //CamouflageAbility.GetInvisible();
+        //invisible = camo.GetInvisible();
+        invisible = _invisible;
+    }
+
+    public bool GetInvisible()
+    {
+        return invisible;
+    }
+
     private IEnumerator Respawn()
     {
         yield return new WaitForSeconds(2f);
@@ -95,8 +110,11 @@ public class Player : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && !tongue.attacking)
         {
-            TakeDamage(1);
-            GetComponent<PlayerMovement>().Knockback();
+            if (!invisible)
+            {
+                TakeDamage(1);
+                GetComponent<PlayerMovement>().Knockback();
+            }
         }
         else if (collision.CompareTag("Hazard"))
         {

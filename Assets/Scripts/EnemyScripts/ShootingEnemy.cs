@@ -11,11 +11,13 @@ public class ShootingEnemy : MonoBehaviour
     float currShotTime, maxShotTime = 3f;
     private Animator anim;
     private AudioManager am;
+    private Player plrComponent;
     
     // Start is called before the first frame update
     void Start()
     {
         target = GameObject.Find("Player");
+        plrComponent = target.GetComponent<Player>();
         currShotTime = maxShotTime;
         anim = GetComponentInChildren<Animator>();
         am = FindObjectOfType<AudioManager>();
@@ -24,18 +26,21 @@ public class ShootingEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (DistanceFromPlayer() <= shootDist)
+        if (!plrComponent.GetInvisible())
         {
-            if (currShotTime <= 0)
+            if (DistanceFromPlayer() <= shootDist)
             {
-                Instantiate(projectile, transform.position, Quaternion.identity);
-                am.Play("PlantDeathSound");
-                anim.SetTrigger("shoot");
-                currShotTime = maxShotTime; 
-            }
-            else
-            {
-                currShotTime -= Time.deltaTime;
+                if (currShotTime <= 0)
+                {
+                    Instantiate(projectile, transform.position, Quaternion.identity);
+                    am.Play("PlantDeathSound");
+                    anim.SetTrigger("shoot");
+                    currShotTime = maxShotTime;
+                }
+                else
+                {
+                    currShotTime -= Time.deltaTime;
+                }
             }
         }
     }

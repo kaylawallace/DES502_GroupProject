@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1677763550098995197}
   - component: {fileID: 1677763550098995170}
   - component: {fileID: 1677763550098995171}
+  - component: {fileID: 330472045}
   m_Layer: 10
   m_Name: CamoBuff
   m_TagString: Invisible
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.70851505, g: 0.1830188, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -102,6 +103,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 3.1407833}
   serializedVersion: 2
   m_Radius: 1.9276295
+--- !u!114 &330472045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677763550098995168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e33e09391e33f44c931624675ebad1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  height: 0.01
 --- !u!1001 &3207500808625658113
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -159,11 +174,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -6760311692404416108, guid: b31a13efe371c164cad0afd42e9a40f5, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: -0.0003349781
+      value: -0.0003311634
       objectReference: {fileID: 0}
     - target: {fileID: -6760311692404416108, guid: b31a13efe371c164cad0afd42e9a40f5, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0
+      value: 0.0000019073486
       objectReference: {fileID: 0}
     - target: {fileID: -6760311692404416108, guid: b31a13efe371c164cad0afd42e9a40f5, type: 3}
       propertyPath: m_Bounds.m_Extent.x
@@ -179,7 +194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5008308539293426981, guid: b31a13efe371c164cad0afd42e9a40f5, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0
+      value: 0.0000019073486
       objectReference: {fileID: 0}
     - target: {fileID: -5008308539293426981, guid: b31a13efe371c164cad0afd42e9a40f5, type: 3}
       propertyPath: m_Bounds.m_Extent.x
@@ -191,15 +206,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2515603903081993551, guid: b31a13efe371c164cad0afd42e9a40f5, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: -0.029999971
+      value: -0.030003786
       objectReference: {fileID: 0}
     - target: {fileID: 2515603903081993551, guid: b31a13efe371c164cad0afd42e9a40f5, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: -0.01152122
+      value: -0.011525035
       objectReference: {fileID: 0}
     - target: {fileID: 2640318417813072304, guid: b31a13efe371c164cad0afd42e9a40f5, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.00002002716
+      value: 0.000023841858
       objectReference: {fileID: 0}
     - target: {fileID: 2640318417813072304, guid: b31a13efe371c164cad0afd42e9a40f5, type: 3}
       propertyPath: m_Bounds.m_Center.y

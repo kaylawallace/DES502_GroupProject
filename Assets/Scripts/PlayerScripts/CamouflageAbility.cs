@@ -11,11 +11,13 @@ public class CamouflageAbility : MonoBehaviour
     private Color[] col;
     private float time;
     private bool invisible;
+    private Player plr;
 
     // Start is called before the first frame update
     void Start()
     {
         renderers = GetComponentsInChildren<SpriteRenderer>();
+        plr = FindObjectOfType<Player>();
         time = 0;
         invisible = false;
         if (renderers[0])
@@ -45,6 +47,7 @@ public class CamouflageAbility : MonoBehaviour
         if (invisible && time <= 0)
         {
             invisible = false;
+            plr.SetInvisible(invisible);
 
             for (int i = 0; i < renderers.Length; i++)
             {
@@ -54,11 +57,17 @@ public class CamouflageAbility : MonoBehaviour
         }
     }
 
+    public bool GetInvisible()
+    {      
+        return invisible;
+    }
+
     void GoInvisible()
     {
         if (!invisible)
         {
             invisible = true;
+            plr.SetInvisible(invisible);
             time = maxTime;
 
             for (int i = 0; i < renderers.Length; i++)
