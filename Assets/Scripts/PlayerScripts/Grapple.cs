@@ -99,7 +99,37 @@ public class Grapple : MonoBehaviour
 
         head.transform.right = aimDir;
 
-        //if (head.rotation.eulerAngles.z )
+        Vector2 copy_aimDir = aimDir;
+        copy_aimDir.Normalize();
+
+        float zRot = Mathf.Atan2(copy_aimDir.y, copy_aimDir.x) * Mathf.Rad2Deg;
+        if (zRot < -90 || zRot > 90)
+        {
+            if (controller.IsFacingRight())
+            {
+                //print("here");
+                //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                //  head.localRotation = Quaternion.Euler(180, 0, zRot);
+                Quaternion rot = Quaternion.Euler(180, 180, zRot);
+                head.localRotation = Quaternion.Euler(-rot.eulerAngles);
+            }
+            else
+            {
+                //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                head.localRotation = Quaternion.Euler(180, 180, zRot);
+            }
+        }
+        else
+        {
+            if (!controller.IsFacingRight())
+            {
+                head.transform.rotation = Quaternion.Euler(0, 180, -zRot);
+            }
+            else
+            {
+                head.transform.rotation = Quaternion.Euler(0, 0, zRot);
+            }
+        }
     }
 
     void StopAim()

@@ -17,6 +17,7 @@ public class Tongue : MonoBehaviour
     public Animator anim;
     public GameObject tongueAnim;
     private AudioManager am;
+    //public Vector2 mouseOnLeftRotLimits, mouseOnRightRotLimits;
 
     void Start()
     {
@@ -110,15 +111,16 @@ public class Tongue : MonoBehaviour
 
         float zRot = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;
         
-        head.transform.rotation = Quaternion.Euler(0, 0, 0);
-        head.transform.rotation = Quaternion.Euler(0, 0, zRot);
+        //head.transform.rotation = Quaternion.Euler(0, 0, 0);
+        
         print(zRot);
 
         if (!controller.IsFacingRight())
         {
-           transform.position = new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z);
+           
         }
 
+        Vector3 initPos = transform.position;
 
         if (zRot < -90 || zRot > 90)
         {
@@ -126,12 +128,35 @@ public class Tongue : MonoBehaviour
             {
                 //print("here");
                 //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-                head.localRotation = Quaternion.Euler(180, 0, zRot);
+                //  head.localRotation = Quaternion.Euler(180, 0, zRot);
+                // DO NOT CHANGE 
+                //zRot = Mathf.Clamp(zRot, -mouseOnLeftRotLimits.x, mouseOnLeftRotLimits.y);
+                transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
+                Quaternion rot = Quaternion.Euler(180, 180, zRot);
+                head.localRotation = Quaternion.Euler(-rot.eulerAngles);
             }
             else
             {
+                //zRot = Mathf.Clamp(zRot, mouseOnLeftRotLimits.x, -mouseOnLeftRotLimits.y);
                 //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                //transform.position = new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z);
                 head.localRotation = Quaternion.Euler(180, 180, zRot);
+            }
+        }
+        else
+        {
+            if (!controller.IsFacingRight())
+            {
+                //zRot = Mathf.Clamp(zRot, -mouseOnRightRotLimits.x, mouseOnRightRotLimits.y);
+                transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
+                head.transform.rotation = Quaternion.Euler(0, 180, -zRot);
+            }
+            else
+            {
+                //zRot = Mathf.Clamp(zRot, mouseOnRightRotLimits.x, -mouseOnRightRotLimits.y);
+                // DO NOT CHANGE
+                //transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+                head.transform.rotation = Quaternion.Euler(0, 0, zRot);
             }
         }
 
@@ -170,6 +195,7 @@ public class Tongue : MonoBehaviour
         GameObject newTongueAnim = (Instantiate(tongueAnim, transform.position, animRot));
         newTongueAnim.transform.parent = transform.parent;
         Destroy(newTongueAnim, .7f);
+        transform.position = new Vector3(initPos.x, initPos.y, initPos.z);
         GameObject newSlobber = (Instantiate(slobberEffect, transform.position, Quaternion.identity));
         newSlobber.transform.parent = transform.parent.parent.parent;
         Destroy(newSlobber, 2f);
@@ -181,10 +207,10 @@ public class Tongue : MonoBehaviour
         collider.enabled = false;
         
 
-        if (!controller.IsFacingRight())
-        {
-           transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
-        }
+        //if (!controller.IsFacingRight())
+        //{
+           
+        //}
 
         attacking = false;
     }
