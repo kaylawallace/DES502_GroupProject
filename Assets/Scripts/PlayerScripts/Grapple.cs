@@ -97,7 +97,7 @@ public class Grapple : MonoBehaviour
         headPos = head.position;
         aimDir = mousePos - headPos;
 
-        head.transform.right = aimDir;
+        //head.transform.right = aimDir;
 
         Vector2 copy_aimDir = aimDir;
         copy_aimDir.Normalize();
@@ -167,28 +167,25 @@ public class Grapple : MonoBehaviour
                 Vector2 hitPoint = ray.point;
                 rope.SetPosition(0, new Vector3(hitPoint.x, hitPoint.y, -.1f));
                 rope.SetPosition(1, new Vector3(headPos.x, headPos.y, -.1f));
-                // print(new Vector3(headPos.x, headPos.y, -.1f));
-                // print(rope.GetPosition(1));
                 distJoint.connectedAnchor = hitPoint;
 
                 GameObject newSlobber = (Instantiate(slobberEffect, firePos.position, Quaternion.identity));
                 newSlobber.transform.parent = transform.parent;
-                GameObject newTongueAnim = (Instantiate(tongueAnim, firePos.position, transform.rotation));
-                newTongueAnim.transform.parent = transform.parent;
-                Destroy(newTongueAnim, 0.3f);
+                GameObject newTongueAnim = (Instantiate(tongueAnim, firePos.position, head.transform.rotation));
+                newTongueAnim.transform.parent = transform;
+                Destroy(newTongueAnim, 0.5f);
                 Destroy(newSlobber, 1f);
 
                 headPos = headSprite.transform.position;
                 aimDir = hitPoint - headPos;
-                //headSprite.transform.right = aimDir;
 
                 if (controller.IsGrounded())
                 {
                     float dist = Vector2.Distance(transform.position, hitPoint);
-                    //print("here");
                     distJoint.distance = dist * .6f;
                 }
 
+                //Invoke("EnableLineRenderer", 1f);
                 distJoint.enabled = true;
                 rope.enabled = true;
                 grappling = true;
@@ -215,6 +212,11 @@ public class Grapple : MonoBehaviour
         anim.SetTrigger("swing_land");
         //print("swing land triggered");
     }
+
+    //void EnableLineRenderer()
+    //{
+    //    rope.enabled = true;
+    //}
 
     void ReelGrapple()
     {
