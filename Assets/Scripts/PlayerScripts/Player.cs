@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     private int health;
     [SerializeField] private Transform respawnPoint;
     private GameObject sprite;
+
+    private PlayerMovement controller;
     //private CamouflageAbility camo;
 
     public Animator anim;
@@ -37,6 +39,7 @@ public class Player : MonoBehaviour
         health = maxHealth;
         tongue = GetComponentInChildren<Tongue>();
         sprite = GameObject.Find("Bones_Anim");
+        controller = GetComponent<PlayerMovement>();
         //camo = GetComponent<CamouflageAbility>();
     }
 
@@ -76,7 +79,8 @@ public class Player : MonoBehaviour
 
     public void Death()
     {
-        SetRendererActive(false);
+        anim.SetTrigger("died");
+        // SetRendererActive(false);
         StartCoroutine(Respawn());      
     }
 
@@ -94,10 +98,12 @@ public class Player : MonoBehaviour
 
     private IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(2f);
+        controller.SetIsSwinging(false);
+        
+        yield return new WaitForSeconds(1.8f);
         health = maxHealth;
-        gameObject.transform.SetPositionAndRotation(respawnPoint.position, Quaternion.identity);
-        SetRendererActive(true);           
+        gameObject.transform.SetPositionAndRotation(respawnPoint.position, Quaternion.Euler(0, 0, 0));
+        // SetRendererActive(true);           
         justDamaged = true;     
     }
 

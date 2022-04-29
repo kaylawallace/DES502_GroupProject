@@ -22,6 +22,7 @@ public class Grapple : MonoBehaviour
     private GameObject slobberEffect;
     public GameObject tongueAnim;
     private AudioManager am;
+    private Player plr;
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +38,9 @@ public class Grapple : MonoBehaviour
         rope.enabled = false;
         aim.enabled = true;
         facingRight = true;
+        plr = GetComponent<Player>();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -58,7 +61,7 @@ public class Grapple : MonoBehaviour
             StartGrapple();
             
         }
-        else if(Input.GetKeyUp(KeyCode.Mouse0) && grappling)
+        else if((Input.GetKeyUp(KeyCode.Mouse0) && grappling) || plr.GetHealth() <= 0)
         {
             StopGrapple();
             am.Stop("SwingSound");
