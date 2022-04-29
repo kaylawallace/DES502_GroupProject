@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround, whatIsPlatform;
     [SerializeField] private float knockbackForce;
     private AudioManager am;
+    private GameObject grassEffect;
+    private bool justLanded;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         am = FindObjectOfType<AudioManager>();
         knockbackTime = maxKnockbackTime;
+        grassEffect = GameObject.Find("GrassParticleEffect");
     }
 
     // Update is called once per frame
@@ -127,7 +130,6 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                // anim.SetBool("swinging", false);
                 return;
             }
         }
@@ -163,15 +165,19 @@ public class PlayerMovement : MonoBehaviour
         if (rb.velocity.y > 0 && !IsGrounded() && !swinging)
         {
             anim.SetInteger("state", 2);
+            justLanded = false;
         }
         else if (rb.velocity.y < 0 && !IsGrounded() && !swinging)
         {
             anim.SetInteger("state", 3);
         }
-        else if (IsGrounded() && (anim.GetInteger("state") == 2 || anim.GetInteger("state") == 3))
+        else if (IsGrounded() && !justLanded/*(anim.GetInteger("state") == 2 || anim.GetInteger("state") == 3)*/)
         {
             jumping = false;
             anim.SetInteger("state", 4);
+            GameObject newGrassEffect = (Instantiate(grassEffect, feetPos.position, Quaternion.Euler(-90, 0, 0)));
+            justLanded = true;
+            Destroy(newGrassEffect, 2f);
         }
     }
 
