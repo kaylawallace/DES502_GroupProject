@@ -16,6 +16,7 @@ public class MovingPlatform : MonoBehaviour
     {
         //startPos = transform;
         nextPos = startPos.position;
+        transform.position = startPos.position;
     }
 
     // Update is called once per frame
@@ -26,12 +27,14 @@ public class MovingPlatform : MonoBehaviour
 
     void MovePlatform()
     {
-        if (transform.position == pos1.position)
+        if (Vector3.Distance(transform.position, pos1.position) <= 0.1f)
         {
+            //print("next pos is pos2");
             nextPos = pos2.position;
         }
-        else if (transform.position == pos2.position)
+        else if (Vector3.Distance(transform.position, pos2.position) <= 0.1f)
         {
+            //print("next pos is pos1");
             nextPos = pos1.position;
         }
 
