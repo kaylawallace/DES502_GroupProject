@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         movInput = Input.GetAxis("Horizontal");
-        Jump();
+        if(!swinging) Jump();
 
         if (swinging || jumping || knocked)
         {
@@ -111,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (swinging)
         {
+            print("swinging");
             am.Stop("WalkSound");
             if (movInput != 0)
             {
@@ -205,14 +206,15 @@ public class PlayerMovement : MonoBehaviour
 
     public bool SetIsSwinging(bool _swinging)
     {
-        if (!IsGrounded() && _swinging)
-        {
-            return swinging = true;
-        }
-        else
-        {
-            return swinging = false;
-        }
+        //if (!IsGrounded() && _swinging)
+        //{
+        //    return swinging = true;
+        //}
+        //else
+        //{
+        //    return swinging = false;
+        //}
+        return swinging = _swinging;
     }
 
     public bool GetIsSwinging()

@@ -182,18 +182,20 @@ public class Grapple : MonoBehaviour
                 headPos = headSprite.transform.position;
                 aimDir = hitPoint - headPos;
 
-                if (controller.IsGrounded())
-                {
-                    float dist = Vector2.Distance(transform.position, hitPoint);
-                    distJoint.distance = dist * .6f;
-                }
+                grappling = true;
+                controller.SetIsSwinging(grappling);
+                am.Play("SwingSound");
+                
 
                 //Invoke("EnableLineRenderer", 1f);
                 distJoint.enabled = true;
+                if (controller.IsGrounded())
+                {
+                    float dist = Vector2.Distance(transform.position, hitPoint);
+                    distJoint.distance = dist * .8f;
+                }
                 rope.enabled = true;
-                grappling = true;
-                am.Play("SwingSound");
-                controller.SetIsSwinging(grappling);
+                
                 anim.SetTrigger("swing");
             }
             else
@@ -214,7 +216,7 @@ public class Grapple : MonoBehaviour
         grappling = false;
         controller.SetIsSwinging(grappling);
         anim.SetTrigger("swing_land");
-        //print("swing land triggered");
+        print("swing land triggered");
     }
 
     //void EnableLineRenderer()

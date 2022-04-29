@@ -35,73 +35,19 @@ public class Tongue : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            Attack();
+            if (!attacking && !controller.GetIsSwinging())
+            {
+                Attack();
+            }          
         }
-
-        Rotate();
     }
 
     void Attack()
     {
-        if (!controller.GetIsSwinging())
-        {
-            StartCoroutine(Attack(attackTime));
-        }
+        StartCoroutine(AttackCoroutine(attackTime));
     }
 
-    public static float ConvertToAngle180(float input)
-    {
-        while (input > 360)
-        {
-            input = input - 360;
-        }
-        while (input < -360)
-        {
-            input = input + 360;
-        }
-        if (input > 180)
-        {
-            input = input - 360;
-        }
-        if (input < -180)
-            input = 360 + input;
-
-        print(input);
-        return input;
-    }
-
-    public void Rotate()
-    {
-       
-
-        //print(aimDir);
-
-        //if (controller.IsFacingRight())
-        //{
-            //head.transform.rotation = Quaternion.Euler(0, 0, zRot);
-        //}
-        //else
-        //{
-        //    //print("here");
-        //    head.transform.rotation = Quaternion.Euler(180, 0, zRot);
-        //}
-
-       
-
-        //transform.eulerAngles = new Vector3(head.transform.eulerAngles.x, head.transform.eulerAngles.y, head.transform.eulerAngles.z + 90);
-
-        //else
-        //{
-        //    if (!controller.IsFacingRight())
-        //    {
-        //        head.localRotation = Quaternion.Euler(180, 0, -zRot);
-
-        //    }
-        //}
-    }
-
-
-    IEnumerator Attack(float attackTime)
+    IEnumerator AttackCoroutine(float attackTime)
     {
         
         attacking = true;
