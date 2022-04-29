@@ -113,7 +113,7 @@ public class Tongue : MonoBehaviour
         
         //head.transform.rotation = Quaternion.Euler(0, 0, 0);
         
-        print(zRot);
+        //print(zRot);
 
         if (!controller.IsFacingRight())
         {

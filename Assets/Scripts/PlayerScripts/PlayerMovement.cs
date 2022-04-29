@@ -47,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (swinging)
         {
+            jumping = false;
+            grounded = false;
             Swing();
         }
         else if (knocked)

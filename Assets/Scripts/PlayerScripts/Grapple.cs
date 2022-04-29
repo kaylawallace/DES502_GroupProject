@@ -58,7 +58,7 @@ public class Grapple : MonoBehaviour
             StartGrapple();
             am.Play("SwingSound");
         }
-        else if(Input.GetKeyUp(KeyCode.Mouse0))
+        else if(Input.GetKeyUp(KeyCode.Mouse0) && grappling)
         {
             StopGrapple();
             am.Stop("SwingSound");
@@ -207,12 +207,13 @@ public class Grapple : MonoBehaviour
     }
 
     void StopGrapple()
-    {
-        anim.SetTrigger("swing_land");
+    {       
         distJoint.enabled = false;
         rope.enabled = false;
         grappling = false;
         controller.isSwinging(grappling);
+        anim.SetTrigger("swing_land");
+        //print("swing land triggered");
     }
 
     void ReelGrapple()
