@@ -53,7 +53,7 @@ public class Grapple : MonoBehaviour
         //    facingRight = true;
         //}
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && (!dialogueTriggerBtn.activeSelf || gameObject.GetComponent<Player>().conversing))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && (!dialogueTriggerBtn.activeSelf && !gameObject.GetComponent<Player>().conversing))
         {
             StartGrapple();
             am.Play("SwingSound");
