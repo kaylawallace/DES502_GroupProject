@@ -197,13 +197,13 @@ public class PlayerMovement : MonoBehaviour
         return grounded;
     }
 
-    bool IsOnPlatform()
-    {
-        isOnPlatform = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsPlatform);
-        return isOnPlatform;
-    }
+    //bool IsOnPlatform()
+    //{
+    //    isOnPlatform = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsPlatform);
+    //    return isOnPlatform;
+    //}
 
-    public bool isSwinging(bool _swinging)
+    public bool SetIsSwinging(bool _swinging)
     {
         if (!IsGrounded() && _swinging)
         {
@@ -213,6 +213,11 @@ public class PlayerMovement : MonoBehaviour
         {
             return swinging = false;
         }
+    }
+
+    public bool GetIsSwinging()
+    {
+        return swinging;
     }
 
     public void Knockback()

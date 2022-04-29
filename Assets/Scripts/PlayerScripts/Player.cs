@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     private int health;
     [SerializeField] private Transform respawnPoint;
     private GameObject sprite;
-    private CamouflageAbility camo;
+    //private CamouflageAbility camo;
 
     public Animator anim;
 
@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
         health = maxHealth;
         tongue = GetComponentInChildren<Tongue>();
         sprite = GameObject.Find("Bones_Anim");
-        camo = GetComponent<CamouflageAbility>();
+        //camo = GetComponent<CamouflageAbility>();
     }
 
     private void Update()

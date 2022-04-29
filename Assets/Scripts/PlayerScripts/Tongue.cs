@@ -43,7 +43,10 @@ public class Tongue : MonoBehaviour
 
     void Attack()
     {
-        StartCoroutine(Attack(attackTime));
+        if (!controller.GetIsSwinging())
+        {
+            StartCoroutine(Attack(attackTime));
+        }
     }
 
     public static float ConvertToAngle180(float input)

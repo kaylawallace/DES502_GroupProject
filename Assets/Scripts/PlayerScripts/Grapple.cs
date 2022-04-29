@@ -56,7 +56,7 @@ public class Grapple : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0) && (!dialogueTriggerBtn.activeSelf && !gameObject.GetComponent<Player>().conversing))
         {
             StartGrapple();
-            am.Play("SwingSound");
+            
         }
         else if(Input.GetKeyUp(KeyCode.Mouse0) && grappling)
         {
@@ -171,9 +171,9 @@ public class Grapple : MonoBehaviour
 
                 GameObject newSlobber = (Instantiate(slobberEffect, firePos.position, Quaternion.identity));
                 newSlobber.transform.parent = transform.parent;
-                GameObject newTongueAnim = (Instantiate(tongueAnim, firePos.position, head.transform.rotation));
-                newTongueAnim.transform.parent = transform;
-                Destroy(newTongueAnim, 0.5f);
+                //GameObject newTongueAnim = (Instantiate(tongueAnim, firePos.position, head.transform.rotation));
+                //newTongueAnim.transform.parent = transform;
+                //Destroy(newTongueAnim, 0.5f);
                 Destroy(newSlobber, 1f);
 
                 headPos = headSprite.transform.position;
@@ -189,7 +189,8 @@ public class Grapple : MonoBehaviour
                 distJoint.enabled = true;
                 rope.enabled = true;
                 grappling = true;
-                controller.isSwinging(grappling);
+                am.Play("SwingSound");
+                controller.SetIsSwinging(grappling);
                 anim.SetTrigger("swing");
             }
             else
@@ -208,7 +209,7 @@ public class Grapple : MonoBehaviour
         distJoint.enabled = false;
         rope.enabled = false;
         grappling = false;
-        controller.isSwinging(grappling);
+        controller.SetIsSwinging(grappling);
         anim.SetTrigger("swing_land");
         //print("swing land triggered");
     }
