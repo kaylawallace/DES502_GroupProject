@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private GameObject sprite;
 
     private PlayerMovement controller;
+    private GameObject startPos;
     //private CamouflageAbility camo;
 
     public Animator anim;
@@ -41,6 +42,9 @@ public class Player : MonoBehaviour
         sprite = GameObject.Find("Bones_Anim");
         controller = GetComponent<PlayerMovement>();
         //camo = GetComponent<CamouflageAbility>();
+
+        startPos = GameObject.Find("InitRespawnPoint");
+        gameObject.transform.position = startPos.transform.position;
     }
 
     private void Update()

@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level_Greybox.unity
     guid: 8f4d1f6eff54211489b2df2480ba3fd0
+  - enabled: 1
+    path: Assets/Scenes/Level3.unity
+    guid: 788adb1882c7637489c0315841b13df7
   - enabled: 0
     path: Assets/Scenes/BossScene.unity
     guid: fe33b4dc99a759e4b9132aebeefbb695
