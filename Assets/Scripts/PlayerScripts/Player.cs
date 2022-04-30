@@ -7,46 +7,29 @@ public class Player : MonoBehaviour
 {
     public int maxHealth;
     public bool conversing = false;
+    public Animator anim;
 
-    Tongue tongue;
+    private Transform respawnPoint;
+   
     private bool justDamaged;
     private bool invisible;
     private float cooldown = 1f;
     private int health;
-    [SerializeField] private Transform respawnPoint;
-    private GameObject sprite;
-
+    private Tongue tongue;
     private PlayerMovement controller;
     private GameObject startPos;
-    private Grapple grapple;
-    //private CamouflageAbility camo;
-
-    public Animator anim;
-
-    //public enum ePlayerState {
-    //    Idle, 
-    //    Walk,
-    //    Attack,
-    //    Swing,
-    //    SwingLand,
-    //    Jump,
-    //    JumpLand,
-    //    Hurt,
-    //    Dead
-    //}
-    //public ePlayerState currState;
+    private HealthUI healthUI;
 
     void Start()
     {
-        health = maxHealth;
-        tongue = GetComponentInChildren<Tongue>();
-        sprite = GameObject.Find("Bones_Anim");
+        tongue = GetComponentInChildren<Tongue>();     
         controller = GetComponent<PlayerMovement>();
-        grapple = GetComponent<Grapple>();
-        //camo = GetComponent<CamouflageAbility>();
-
+        healthUI = GetComponent<HealthUI>();
         startPos = GameObject.Find("InitRespawnPoint");
+
+        health = maxHealth;
         gameObject.transform.position = startPos.transform.position;
+        respawnPoint = startPos.transform;
     }
 
     private void Update()
@@ -86,15 +69,11 @@ public class Player : MonoBehaviour
     public void Death()
     {
         anim.SetTrigger("died");
-        //grapple.StopGrapple();
-        // SetRendererActive(false);
         StartCoroutine(Respawn());      
     }
 
     public void SetInvisible(bool _invisible)
     {
-        //CamouflageAbility.GetInvisible();
-        //invisible = camo.GetInvisible();
         invisible = _invisible;
     }
 
@@ -106,17 +85,12 @@ public class Player : MonoBehaviour
     private IEnumerator Respawn()
     {
         controller.SetIsSwinging(false);
-        print("swinging = false");
-        yield return new WaitForSeconds(1.8f);
-        health = maxHealth;
-        gameObject.transform.SetPositionAndRotation(respawnPoint.position, Quaternion.Euler(0, 0, 0));
-        // SetRendererActive(true);           
-        justDamaged = true;     
-    }
 
-    public void SetRendererActive(bool active)
-    {
-        sprite.SetActive(active);
+        yield return new WaitForSeconds(1.8f);
+
+        health = maxHealth;
+        gameObject.transform.SetPositionAndRotation(respawnPoint.position, Quaternion.Euler(0, 0, 0));          
+        justDamaged = true;     
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -126,25 +100,25 @@ public class Player : MonoBehaviour
             if (!invisible)
             {
                 TakeDamage(1);
-                GetComponent<PlayerMovement>().Knockback();
+                controller.Knockback();
             }
         }
         else if (collision.CompareTag("Hazard"))
         {
-            TakeDamage(3);
-            GetComponent<PlayerMovement>().Knockback();
+            TakeDamage(maxHealth);
+            controller.Knockback();
         }
         else if (collision.CompareTag("Projectile"))
         {
             TakeDamage(1);
-            GetComponent<PlayerMovement>().Knockback();
+            controller.Knockback();
         }
         else if (collision.CompareTag("Health"))
         {
             if (health < maxHealth)
             {
                 health++;
-                GetComponent<HealthUI>().UpdateHearts();
+                healthUI.UpdateHearts();
             }
             Destroy(collision.gameObject);
         }

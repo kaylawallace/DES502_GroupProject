@@ -6,7 +6,6 @@ public class CamouflageAbility : MonoBehaviour
 {
     public float maxTime;
 
-    private GameObject head;
     private SpriteRenderer[] renderers;
     private Color[] col;
     private float time;
@@ -20,6 +19,7 @@ public class CamouflageAbility : MonoBehaviour
         plr = FindObjectOfType<Player>();
         time = 0;
         invisible = false;
+
         if (renderers[0])
         {
             col = new Color[renderers.Length];

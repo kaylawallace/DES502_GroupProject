@@ -8,19 +8,18 @@ public class PlayerMovement : MonoBehaviour
     public Transform feetPos;
     public float checkRadius;
     public float maxKnockbackTime;
-
     public Animator anim;
 
-    private Rigidbody2D rb;
-    private float movInput;
-    private float knockbackTime;
-    private bool grounded = false, jumping = false, swinging = false, knocked = false, isOnPlatform = false, facingRight = true;
     [SerializeField] private LayerMask whatIsGround, whatIsPlatform;
     [SerializeField] private float knockbackForce;
+
+    private Rigidbody2D rb;
     private AudioManager am;
     private GameObject grassEffect;
-    private bool justLanded;
-
+    private float movInput;
+    private float knockbackTime;
+    private bool grounded = false, jumping = false, swinging = false, knocked = false, facingRight = true, justLanded = false;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -111,11 +110,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (swinging)
         {
-            //print("swinging");
             am.Stop("WalkSound");
             if (movInput != 0)
             {
-                // anim.SetBool("swinging", true);
                 if (movInput > 0)
                 {
                     rb.AddForce(new Vector2(1, 0) * swingForce);
@@ -153,10 +150,6 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             }          
         }
-        else if (IsGrounded())
-        {
-            //jumping = false;
-        }
         else if (rb.velocity.y < 0 && !swinging)
         {
             anim.SetInteger("state", 3);
@@ -165,61 +158,24 @@ public class PlayerMovement : MonoBehaviour
 
         if (rb.velocity.y > 0 && !IsGrounded() && !swinging)
         {
+            // Set animation state to jumping
             anim.SetInteger("state", 2);
             justLanded = false;
         }
         else if (rb.velocity.y < 0 && !IsGrounded() && !swinging)
         {
+            // Set animation state to falling
             anim.SetInteger("state", 3);
         }
-        else if (IsGrounded() && !justLanded/*(anim.GetInteger("state") == 2 || anim.GetInteger("state") == 3)*/)
+        else if (IsGrounded() && !justLanded)
         {
+            // Set animation state to landing 
             jumping = false;
             anim.SetInteger("state", 4);
             GameObject newGrassEffect = (Instantiate(grassEffect, feetPos.position, Quaternion.Euler(-90, 0, 0)));
             justLanded = true;
             Destroy(newGrassEffect, 2f);
         }
-    }
-
-    public bool IsFacingRight()
-    {
-        return facingRight;
-    }
-
-    //private void SetFacingRight(bool _facingRight)
-    //{
-    //    facingRight = _facingRight;
-    //}
-
-    public bool IsGrounded()
-    {
-        grounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
-        return grounded;
-    }
-
-    //bool IsOnPlatform()
-    //{
-    //    isOnPlatform = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsPlatform);
-    //    return isOnPlatform;
-    //}
-
-    public bool SetIsSwinging(bool _swinging)
-    {
-        //if (!IsGrounded() && _swinging)
-        //{
-        //    return swinging = true;
-        //}
-        //else
-        //{
-        //    return swinging = false;
-        //}
-        return swinging = _swinging;
-    }
-
-    public bool GetIsSwinging()
-    {
-        return swinging;
     }
 
     public void Knockback()
@@ -236,5 +192,26 @@ public class PlayerMovement : MonoBehaviour
             Vector2 knockbackDir = new Vector2(-1, 0);
             rb.velocity = new Vector2(knockbackDir.x * knockbackForce, rb.velocity.y);
         }
+    }
+
+    public bool IsFacingRight()
+    {
+        return facingRight;
+    }
+
+    public bool IsGrounded()
+    {
+        grounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
+        return grounded;
+    }
+
+    public bool SetIsSwinging(bool _swinging)
+    {
+        return swinging = _swinging;
+    }
+
+    public bool GetIsSwinging()
+    {
+        return swinging;
     }
 }
