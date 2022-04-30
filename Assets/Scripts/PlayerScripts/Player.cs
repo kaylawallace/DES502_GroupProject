@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
 
     private PlayerMovement controller;
     private GameObject startPos;
+    private Grapple grapple;
     //private CamouflageAbility camo;
 
     public Animator anim;
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour
         tongue = GetComponentInChildren<Tongue>();
         sprite = GameObject.Find("Bones_Anim");
         controller = GetComponent<PlayerMovement>();
+        grapple = GetComponent<Grapple>();
         //camo = GetComponent<CamouflageAbility>();
 
         startPos = GameObject.Find("InitRespawnPoint");
@@ -84,6 +86,7 @@ public class Player : MonoBehaviour
     public void Death()
     {
         anim.SetTrigger("died");
+        //grapple.StopGrapple();
         // SetRendererActive(false);
         StartCoroutine(Respawn());      
     }
@@ -103,7 +106,7 @@ public class Player : MonoBehaviour
     private IEnumerator Respawn()
     {
         controller.SetIsSwinging(false);
-        
+        print("swinging = false");
         yield return new WaitForSeconds(1.8f);
         health = maxHealth;
         gameObject.transform.SetPositionAndRotation(respawnPoint.position, Quaternion.Euler(0, 0, 0));

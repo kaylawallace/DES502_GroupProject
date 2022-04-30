@@ -61,13 +61,19 @@ public class Grapple : MonoBehaviour
             StartGrapple();
             
         }
-        else if((Input.GetKeyUp(KeyCode.Mouse0) && grappling) || plr.GetHealth() <= 0)
+        else if((Input.GetKeyUp(KeyCode.Mouse0) && grappling)/* || plr.GetHealth() <= 0*/)
         {
             StopGrapple();
             am.Stop("SwingSound");
         }
 
-       
+        if (plr.GetHealth() <= 0 && grappling)
+        {
+            distJoint.enabled = false;
+            rope.enabled = false;
+            grappling = false;
+            controller.SetIsSwinging(grappling);
+        }
 
         if (grappling)
         {
@@ -209,14 +215,14 @@ public class Grapple : MonoBehaviour
         }
     }
 
-    void StopGrapple()
+    public void StopGrapple()
     {       
         distJoint.enabled = false;
         rope.enabled = false;
         grappling = false;
         controller.SetIsSwinging(grappling);
         anim.SetTrigger("swing_land");
-        print("swing land triggered");
+        //print("swing land triggered");
     }
 
     //void EnableLineRenderer()

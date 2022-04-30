@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (swinging)
         {
-            print("swinging");
+            //print("swinging");
             am.Stop("WalkSound");
             if (movInput != 0)
             {
