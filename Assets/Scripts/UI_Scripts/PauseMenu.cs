@@ -8,11 +8,14 @@ public class PauseMenu : MonoBehaviour
     public static bool isPaused = false;
     private GameObject pauseMenuUI;
     public LevelLoader levelLoader;
+    private GameObject controlsUI;
 
     private void Start()
     {
         pauseMenuUI = GameObject.Find("PauseMenu");
         pauseMenuUI.SetActive(false);
+        controlsUI = GameObject.Find("ControlsUI");
+        controlsUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -56,5 +59,17 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void ControlsMenu()
+    {
+        pauseMenuUI.SetActive(false);
+        controlsUI.SetActive(true);
+    }
+
+    public void BackToPause()
+    {
+        controlsUI.SetActive(false);
+        pauseMenuUI.SetActive(true);
     }
 }
