@@ -8,13 +8,13 @@ public class MovingPlatform : MonoBehaviour
 {
     public Transform pos1, pos2;
 
-    [SerializeField] Transform startPos;
-    Vector3 nextPos;
-    [SerializeField] float speed;
+    [SerializeField] private Transform startPos;   
+    [SerializeField] private float speed;
+
+    private Vector3 nextPos;
 
     void Start()
     {
-        //startPos = transform;
         nextPos = startPos.position;
         transform.position = startPos.position;
     }
@@ -29,12 +29,10 @@ public class MovingPlatform : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, pos1.position) <= 0.1f)
         {
-            //print("next pos is pos2");
             nextPos = pos2.position;
         }
         else if (Vector3.Distance(transform.position, pos2.position) <= 0.1f)
         {
-            //print("next pos is pos1");
             nextPos = pos1.position;
         }
 

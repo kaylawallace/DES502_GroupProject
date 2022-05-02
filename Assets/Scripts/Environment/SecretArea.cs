@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class SecretArea : MonoBehaviour
 {
-    static float t = 0f;
-    bool reveal = false;
+    private static float t = 0f;
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            //print("player collide");
             if (t >= 0)
             {
                 Reveal();

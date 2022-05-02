@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BuffBob : MonoBehaviour
 {
-    [SerializeField] private float speed = .8f;
-    [SerializeField] private float height = 0.0001f;
+    [SerializeField] private float speed;
+    [SerializeField] private float height;
 
     void Update()
     {

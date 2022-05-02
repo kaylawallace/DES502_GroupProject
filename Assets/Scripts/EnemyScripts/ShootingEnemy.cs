@@ -22,10 +22,10 @@ public class ShootingEnemy : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         am = FindObjectOfType<AudioManager>();
 
-        currShotTime = maxShotTime;    
+        currShotTime = 0;    
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (!plrComponent.GetInvisible())
