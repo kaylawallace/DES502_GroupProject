@@ -11,7 +11,6 @@ public class Enemy : MonoBehaviour
     private float damageCooldown, maxDamageCooldown = .8f;
     private AudioManager am;
 
-
     private void Start()
     {
         am = FindObjectOfType<AudioManager>();
@@ -19,6 +18,7 @@ public class Enemy : MonoBehaviour
         damageCooldown = maxDamageCooldown;
         currHealth = maxHealth;
     }
+
     private void Update()
     {
         if (justDamaged)
@@ -39,8 +39,6 @@ public class Enemy : MonoBehaviour
         {
             justDamaged = true;
             currHealth -= damage;
-
-            // Play hurt anim
 
             if (currHealth <= 0)
             {

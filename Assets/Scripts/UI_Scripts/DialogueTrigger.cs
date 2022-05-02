@@ -46,8 +46,6 @@ public class DialogueTrigger : MonoBehaviour
         {
             if (!plr.conversing)
             {
-                //plr.conversing = true;
-                //TriggerDialogue();
                 TriggerButton(false);
             }
         }

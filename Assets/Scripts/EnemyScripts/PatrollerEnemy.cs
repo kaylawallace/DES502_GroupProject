@@ -29,12 +29,10 @@ public class PatrollerEnemy : MonoBehaviour
         if (transform.position == pos1.position)
         {
             nextPos = pos2.position;
-            // transform.eulerAngles = new Vector3(0, 180, 0);
         }
         else if (transform.position == pos2.position)
         {
             nextPos = pos1.position;
-            // transform.eulerAngles = new Vector3(0, -180, 0);
         }
 
         transform.position = Vector3.MoveTowards(transform.position, nextPos, speed * Time.deltaTime);
@@ -42,17 +40,14 @@ public class PatrollerEnemy : MonoBehaviour
 
     void Flip() 
     {
-        // print(rb.velocity.x);
         if (nextPos == pos1.position)
         {
-            // moving left 
-            // print("moving left");
+            // Moving left 
             transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else if (nextPos == pos2.position)
         {
-            // moving right 
-            // print("moving right");
+            // Moving right 
             transform.eulerAngles = new Vector3(0, -180, 0);
         }
     }

@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ShootingEnemy : MonoBehaviour
 {
-    public GameObject projectile;
+    public GameObject projectile;   
     
-    GameObject target;
-    [SerializeField] float shootDist; 
-    float currShotTime, maxShotTime = 3f;
+    [SerializeField] float shootDist;
+
+    private GameObject target;
+    private float currShotTime, maxShotTime = 3f;
     private Animator anim;
     private AudioManager am;
     private Player plrComponent;
@@ -18,9 +19,10 @@ public class ShootingEnemy : MonoBehaviour
     {
         target = GameObject.Find("Player");
         plrComponent = target.GetComponent<Player>();
-        currShotTime = maxShotTime;
         anim = GetComponentInChildren<Animator>();
         am = FindObjectOfType<AudioManager>();
+
+        currShotTime = maxShotTime;    
     }
 
     // Update is called once per frame
