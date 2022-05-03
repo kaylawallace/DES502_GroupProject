@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
         healthUI = GetComponent<HealthUI>();
         startPos = GameObject.Find("InitRespawnPoint");
 
-        health = maxHealth;
+        health = 2;
         gameObject.transform.position = startPos.transform.position;
         respawnPoint = startPos.transform;
     }

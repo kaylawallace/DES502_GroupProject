@@ -32,7 +32,7 @@ public class Grapple : MonoBehaviour
         distJoint = GetComponent<DistanceJoint2D>();
         controller = GetComponentInParent<PlayerMovement>();
         am = FindObjectOfType<AudioManager>();
-        slobberEffect = GameObject.Find("Spit");
+        slobberEffect = GameObject.Find("Slobber");
 
         grappling = false;
         distJoint.enabled = false;
