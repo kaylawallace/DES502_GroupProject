@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Method to handle the reveal of the secret area upon the player entering 
+ */
 public class SecretArea : MonoBehaviour
 {
     private static float t = 0f;
@@ -17,6 +20,9 @@ public class SecretArea : MonoBehaviour
         }
     }
 
+    /*
+     * Method repsonsible for changing the opacity of the secret area cover to reveal the area 
+     */
     public void Reveal()
     {
         Color temp = gameObject.GetComponent<SpriteRenderer>().color;

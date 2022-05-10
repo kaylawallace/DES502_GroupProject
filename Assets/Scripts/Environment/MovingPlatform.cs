@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * REFERENCE: Xlaugts: Unity 2D Moving Platform Tutorial: https://www.youtube.com/watch?v=8aSzWGKiDAM
+ */
 
-// https://www.youtube.com/watch?v=8aSzWGKiDAM
+/*
+ * Script to handle the behaviour of the moving platforms
+ */
 public class MovingPlatform : MonoBehaviour
 {
     public Transform pos1, pos2;
@@ -19,12 +24,14 @@ public class MovingPlatform : MonoBehaviour
         transform.position = startPos.position;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         MovePlatform();
     }
 
+    /*
+     * Method to handle moving the platforms between two points in the scene 
+     */
     void MovePlatform()
     {
         if (Vector3.Distance(transform.position, pos1.position) <= 0.1f)
@@ -39,6 +46,10 @@ public class MovingPlatform : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, nextPos, speed * Time.deltaTime);
     }
 
+    /*
+     * Two methods below handle the parenting/deparenting of the player to the platforms 
+     * This ensures that they move with the platforms when on them 
+     */
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * Script to handle player collision detection and health (inc. taking damage, death, and respawn)
+ */
 public class Player : MonoBehaviour
 {
     public int maxHealth;
@@ -27,7 +30,7 @@ public class Player : MonoBehaviour
         healthUI = GetComponent<HealthUI>();
         startPos = GameObject.Find("InitRespawnPoint");
 
-        health = 2;
+        health = maxHealth;
         gameObject.transform.position = startPos.transform.position;
         respawnPoint = startPos.transform;
     }
@@ -45,6 +48,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    /*
+     * Method to handle the player taking damage 
+     * Params: int damage - amout of damage to decrement the player's health by 
+     */
     public void TakeDamage(int damage)
     {
         if (!justDamaged && !tongue.attacking)
@@ -61,27 +68,45 @@ public class Player : MonoBehaviour
         }
     }
 
+    /*
+     * Method used by other scripts to get the player's current health 
+     * Returns: int health - player's current health value 
+     */
     public int GetHealth()
     {
         return health;
     }
 
+    /*
+     * Method to handle player death 
+     */
     public void Death()
     {
         anim.SetTrigger("died");
         StartCoroutine(Respawn());      
     }
 
+    /*
+     * Method to set the player's invisible property 
+     * Params: bool _invisible - whether the player is currently invisible
+     */
     public void SetInvisible(bool _invisible)
     {
         invisible = _invisible;
     }
 
+    /*
+     * Method used by other scripts to get whether the player is invisible 
+     * Returns: bool invisible - whether the player is currently invisible 
+     */
     public bool GetInvisible()
     {
         return invisible;
     }
 
+    /*
+     * Coroutine to handle respawning the player at the last respawnPoint
+     */
     private IEnumerator Respawn()
     {
         controller.SetIsSwinging(false);
@@ -95,6 +120,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Cannot take damage while attacking as enemy collision detection picks up tongue as player and would therefore do damage when player is attacking 
         if (collision.CompareTag("Enemy") && !tongue.attacking)
         {
             if (!invisible)
@@ -103,6 +129,7 @@ public class Player : MonoBehaviour
                 controller.Knockback();
             }
         }
+        // Take maximum damage if fallen into hazard as there is no way to get out and so want player to immediately respawn 
         else if (collision.CompareTag("Hazard"))
         {
             TakeDamage(maxHealth);
@@ -113,6 +140,7 @@ public class Player : MonoBehaviour
             TakeDamage(1);
             controller.Knockback();
         }
+        // Executes when the player collects a health bug 
         else if (collision.CompareTag("Health"))
         {
             if (health < maxHealth)
@@ -122,6 +150,7 @@ public class Player : MonoBehaviour
             }
             Destroy(collision.gameObject);
         }
+        // Sets respawn points throughout the level 
         else if (collision.CompareTag("RespawnPoint"))
         {
             respawnPoint = collision.gameObject.transform;

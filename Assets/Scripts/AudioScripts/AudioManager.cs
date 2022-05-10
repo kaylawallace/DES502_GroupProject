@@ -2,6 +2,9 @@ using UnityEngine.Audio;
 using UnityEngine;
 using System;
 
+/*
+ * Reference: Brackeys: Introduction to AUDIO in Unity: https://www.youtube.com/watch?v=6OT43pvUyfY
+ */
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
@@ -21,6 +24,7 @@ public class AudioManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
+        // Convert sounds in sounds array to audio sources 
         for (int i = 0; i < sounds.Length; i++) 
         {
             sounds[i].source = gameObject.AddComponent<AudioSource>();
@@ -31,6 +35,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /*
+     * Method to handle playing audio clips in the scene 
+     * Params: string name - name of the audio source to be played 
+     */
     public void Play(string name) 
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -46,6 +54,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /*
+     * Method to handle stopping currently playing audio clips in the scene 
+     * Params: string name - name of the audio source to be stopped 
+     */
     public void Stop(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);

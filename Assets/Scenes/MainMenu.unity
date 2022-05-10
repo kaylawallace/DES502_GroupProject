@@ -2447,7 +2447,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1891894397}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2053237880}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1891894397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2583,7 +2595,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6477085165847167343, guid: e81611f8ad2e97646a3b90cc5e3f8f9d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 338
+      value: 346.68698
       objectReference: {fileID: 0}
     - target: {fileID: 6477085166742038004, guid: e81611f8ad2e97646a3b90cc5e3f8f9d, type: 3}
       propertyPath: m_Pivot.x
@@ -2691,16 +2703,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6477085167063217082, guid: e81611f8ad2e97646a3b90cc5e3f8f9d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 518.3673
+      value: 585.74
       objectReference: {fileID: 0}
     - target: {fileID: 6477085167063217082, guid: e81611f8ad2e97646a3b90cc5e3f8f9d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -22.6349
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 6477085167063217083, guid: e81611f8ad2e97646a3b90cc5e3f8f9d, type: 3}
       propertyPath: m_text
-      value: "MOVE: WASD\nJUMP: SPACE \nGRAPPLE: RIGHT-MOUSE BUTTON\nREEL GRAPPLE
-        IN: SPACE \nREEL GRAPPLE OUT: LEFT-SHIFT\nATTACK: R\nPAUSE: ESC"
+      value: "MOVE: WASD\nJUMP: SPACE \nGRAPPLE: LEFT MOUSE BUTTON\nREEL GRAPPLE
+        IN: SPACE \nREEL GRAPPLE OUT: LEFT-SHIFT\nATTACK: R\nAIM ATTACK: MOUSE POSITION\nPAUSE:
+        ESC"
       objectReference: {fileID: 0}
     - target: {fileID: 6477085167063217083, guid: e81611f8ad2e97646a3b90cc5e3f8f9d, type: 3}
       propertyPath: m_lineSpacing

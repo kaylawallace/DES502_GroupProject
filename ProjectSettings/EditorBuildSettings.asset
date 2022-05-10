@@ -9,12 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 07ef36516fa63e84daf2169dfbbb4edb
   - enabled: 1
-    path: Assets/Scenes/Level_Greybox.unity
+    path: Assets/Scenes/MainLevel.unity
     guid: 8f4d1f6eff54211489b2df2480ba3fd0
   - enabled: 1
-    path: Assets/Scenes/Level3.unity
+    path: Assets/Scenes/GameOverScene.unity
     guid: 788adb1882c7637489c0315841b13df7
   - enabled: 0
-    path: Assets/Scenes/BossScene.unity
+    path: Assets/Scenes/UnusedScenes/BossScene.unity
     guid: fe33b4dc99a759e4b9132aebeefbb695
   m_configObjects: {}

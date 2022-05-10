@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Script to handle the player attacking 
+ */
 public class Tongue : MonoBehaviour
 {
     public GameObject slobberEffect;
@@ -30,11 +33,11 @@ public class Tongue : MonoBehaviour
         boxCollider.enabled = false;        
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
+            // Do not allow player to attack while swinging (as that would involve having 2 tongues)
             if (!attacking && !controller.GetIsSwinging())
             {
                 Attack();
@@ -42,16 +45,24 @@ public class Tongue : MonoBehaviour
         }
     }
 
+    /*
+     * Method to handle attacking
+     */
     void Attack()
     {
         StartCoroutine(AttackCoroutine(attackTime));
     }
 
+    /*
+     * Coroutine to handle attacking 
+     */
     IEnumerator AttackCoroutine(float attackTime)
     {       
         attacking = true;
         anim.SetTrigger("attack");
 
+        // MUCH LIKE IN THE GRAPPLE SCRIPT 
+        // Calculate the direction between the player's head sprite and mouse position
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 headPos = head.position;
         Vector2 aimDir = mousePos - headPos;
@@ -61,6 +72,7 @@ public class Tongue : MonoBehaviour
 
         Vector3 initPos = transform.position;
 
+        // Set the z-rotation based on the mouse position and orientation of player 
         // If the mouse position is on the left side of the player 
         if (zRot < -90 || zRot > 90)
         {
@@ -98,13 +110,14 @@ public class Tongue : MonoBehaviour
             animRot = Quaternion.Euler(head.localRotation.eulerAngles.x, 0, head.localRotation.eulerAngles.z);
         }
 
-
+        // Instantiate the tongue animation
         GameObject newTongueAnim = (Instantiate(tongueAnim, transform.position, animRot));
         newTongueAnim.transform.parent = transform.parent;
         Destroy(newTongueAnim, .7f);
 
         transform.position = new Vector3(initPos.x, initPos.y, initPos.z);
 
+        // Instantiate the slobber particle effect 
         GameObject newSlobber = (Instantiate(slobberEffect, transform.position, Quaternion.identity));
         newSlobber.transform.parent = transform.parent.parent.parent;
         Destroy(newSlobber, 2f);
@@ -113,6 +126,7 @@ public class Tongue : MonoBehaviour
 
         boxCollider.enabled = true;
 
+        // Ensures the player is attacking for more than a single frame 
         yield return new WaitForSeconds(attackTime);
 
         boxCollider.enabled = false;       

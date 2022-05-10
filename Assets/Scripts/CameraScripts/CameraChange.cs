@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
+/*
+ * Script to handle zooming the camera in/out upon player collision with trigger boxes in the scene 
+ */
 public class CameraChange : MonoBehaviour
 {
    [SerializeField] private float newSize; 
 
    private CinemachineVirtualCamera cam; 
-   private float currSize;
+   private float currSize;  
    
-   
-    // Start is called before the first frame update
     void Start()
     {
         cam = FindObjectOfType<CinemachineVirtualCamera>();
@@ -28,6 +29,13 @@ public class CameraChange : MonoBehaviour
         }
     }
 
+    /*
+     * Coroutine to smoothly zoom the camera in or out 
+     * Params:  from - start size of the camera 
+     *          to - end size of the camera
+     *          time - time to complete the transition in
+     *          steps - number of steps to complete the transition in (how smooth the transition will be)
+     */
     IEnumerator ZoomCamera(float from, float to, float time, float steps)
     {
         float f = 0;

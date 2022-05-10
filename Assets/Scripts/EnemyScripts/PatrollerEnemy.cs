@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Script to handle the behaviour of the patroller enemies 
+ */
 public class PatrollerEnemy : MonoBehaviour
 {
     public Transform pos1, pos2;
 
-    [SerializeField] Transform startPos;
-    Vector3 nextPos;
-    [SerializeField] float speed;
-    private Rigidbody2D rb;
+    [SerializeField] private Transform startPos;
+    [SerializeField] private float speed;
 
-    // Start is called before the first frame update
+    private Vector3 nextPos;
+
     void Start()
     {
         nextPos = startPos.position;
-        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -24,6 +25,9 @@ public class PatrollerEnemy : MonoBehaviour
         Flip();
     }
 
+    /*
+     * Method to handle the patrolling of enemies between two positions 
+     */
     void Patrol()
     {
         if (transform.position == pos1.position)
@@ -38,6 +42,9 @@ public class PatrollerEnemy : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, nextPos, speed * Time.deltaTime);
     }
 
+    /*
+     * Method to handle flipping the enemy based on the direction it is moving 
+     */
     void Flip() 
     {
         if (nextPos == pos1.position)

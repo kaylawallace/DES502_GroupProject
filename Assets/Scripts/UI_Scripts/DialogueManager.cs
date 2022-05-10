@@ -4,13 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/*
+ * REFERENCE: Brackeys - How to make a Dialogue System in Unity - https://www.youtube.com/watch?v=_nRzoTzeyxU
+ */
+
+/*
+ * Script to handle dialogue interactions in the scene 
+ */
 public class DialogueManager : MonoBehaviour
 {
     public GameObject dialogueUI;
     public TextMeshProUGUI nameTxt, dialogueTxt;
-    private Queue<string> sentences;
-    private Player plr;
     public bool triggerPressed = false;
+
+    private Queue<string> sentences;
+    private Player plr;   
     private AudioManager am;
 
     void Start()
@@ -20,11 +28,18 @@ public class DialogueManager : MonoBehaviour
         am = FindObjectOfType<AudioManager>();
     }
 
+    /*
+     * Method to set the triggerPressed var to true, meaning the player has pressed the 'Listen' button in the scene 
+     */
     public void SetActive()
     {
         triggerPressed = true;
     }
 
+    /*
+     * Method to start a dialogue interaction 
+     * Params: Dialogue dialogue - the Dialogue object for the specific dialogue interaction 
+     */
     public void StartDialogue(Dialogue dialogue)
     {
         nameTxt.text = dialogue.name;
@@ -33,6 +48,7 @@ public class DialogueManager : MonoBehaviour
         dialogueUI.SetActive(true);
         am.Play("FrogCroakSound");
 
+        // Add all sentences in the dialogue object to a queue 
         for (int i = 0; i < dialogue.sentences.Length; i++)
         {
             sentences.Enqueue(dialogue.sentences[i]);
@@ -41,6 +57,9 @@ public class DialogueManager : MonoBehaviour
         DisplayNextSentence();
     }
 
+    /*
+     * Method to display the next sentence in the sentences queue 
+     */
     public void DisplayNextSentence()
     {
         if (sentences.Count == 0)
@@ -54,6 +73,10 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(TypeSentence(sentence));
     }
 
+    /*
+     * Coroutine to type letters in a sentence one per frame to add polish 
+     * Params: string sentence - the sentence to be typed out 
+     */
     IEnumerator TypeSentence(string sentence)
     {
         dialogueTxt.text = "";
@@ -64,6 +87,9 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    /*
+     * Method to handle ending dialogue 
+     */
     private void EndDialogue()
     {
         Debug.Log("Ending conversation");

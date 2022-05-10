@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Script responsible for handling the camouflage ability of the player when they collect the corresponding bug buff
+ */
 public class CamouflageAbility : MonoBehaviour
 {
     public float maxTime;
@@ -12,7 +15,6 @@ public class CamouflageAbility : MonoBehaviour
     private bool invisible;
     private Player plr;
 
-    // Start is called before the first frame update
     void Start()
     {
         renderers = GetComponentsInChildren<SpriteRenderer>();
@@ -20,6 +22,7 @@ public class CamouflageAbility : MonoBehaviour
         time = 0;
         invisible = false;
 
+        // Initialise the renderers array to all of the sprite renderers of the player 
         if (renderers[0])
         {
             col = new Color[renderers.Length];
@@ -35,12 +38,15 @@ public class CamouflageAbility : MonoBehaviour
        
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         CheckInvisibility(); 
     }
 
+    /*
+     * Method responsible for the timer on the invisibility of the player 
+     */
     void CheckInvisibility()
     {
         time -= Time.deltaTime;
@@ -57,11 +63,18 @@ public class CamouflageAbility : MonoBehaviour
         }
     }
 
+    /*
+     * Method that can be used in other scripts to get the invisible property of the player 
+     * Returns: bool invisible - whether or not the player is currently invisible 
+     */
     public bool GetInvisible()
     {      
         return invisible;
     }
 
+    /*
+     * Method to turn the player invisible upon collecting the bug buff
+     */
     void GoInvisible()
     {
         if (!invisible)
@@ -70,6 +83,7 @@ public class CamouflageAbility : MonoBehaviour
             plr.SetInvisible(invisible);
             time = maxTime;
 
+            // Reduce the alpha of all renderers to .2 (so that the player can still see where they are)
             for (int i = 0; i < renderers.Length; i++)
             {
                 col[i].a = .2f;

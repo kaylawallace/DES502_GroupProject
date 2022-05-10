@@ -2,13 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * REFERENCE: START MENU in Unity - https://www.youtube.com/watch?v=zc8ac_qUXQY
+ */
+
+/*
+ * Script to handle main menu functionality 
+ */
 public class MainMenu : MonoBehaviour
 {
     private GameObject mainMenuUI;
     private GameObject controlsUI;
     private GameObject creditsUI;
 
-    // Start is called before the first frame update
     void Start()
     {
         mainMenuUI = GameObject.Find("MainMenu");
@@ -20,18 +26,28 @@ public class MainMenu : MonoBehaviour
         creditsUI.SetActive(false);
     }
 
+    /*
+     * Method to handle setting the controls menu to active  
+     */
     public void ControlsMenu()
     {
         mainMenuUI.SetActive(false);
         controlsUI.SetActive(true);
     }
 
+    /*
+     * Method to handle setting the credits menu to active 
+     */
     public void CreditsMenu()
     {
         mainMenuUI.SetActive(false);
         creditsUI.SetActive(true);
     }
 
+    /*
+     * Method to handle the functionality of the back button 
+     * Taking the player back to the main menu from the controls or credits menu 
+     */
     public void Back()
     {
         if (controlsUI.activeSelf)
@@ -46,6 +62,9 @@ public class MainMenu : MonoBehaviour
         mainMenuUI.SetActive(true);
     }
     
+    /*
+     * Method to quit the game from the main menu 
+     */
     public void QuitGame()
     {
         Application.Quit();

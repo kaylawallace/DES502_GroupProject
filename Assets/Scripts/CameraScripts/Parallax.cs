@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Reference: Dani Krossing: PARALLAX AND INFINITE BACKGROUND IN UNITY: https://www.youtube.com/watch?v=TccZzs1kJQM&t=1010s
+ */
+
+/*
+ * Script to apply a parallax effect to the background 
+ */
 public class Parallax : MonoBehaviour
 {
     [SerializeField] private float parallax;
@@ -9,16 +16,15 @@ public class Parallax : MonoBehaviour
     private float startPos;
     private GameObject cam;    
     
-    // Start is called before the first frame update
     void Start()
     {
         cam = GameObject.Find("CM_Cam");
         startPos = transform.position.x;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Only apply the parallax on the x-axis
         float dist = cam.transform.position.x * parallax;
         transform.position = new Vector3(startPos + dist, transform.position.y, transform.position.z);
     }

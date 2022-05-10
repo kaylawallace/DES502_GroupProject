@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Script to handle all player movement
+ */
 public class PlayerMovement : MonoBehaviour
 {
     public float speed, jumpForce, minJumpForce, swingForce;
@@ -20,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
     private float knockbackTime;
     private bool grounded = false, jumping = false, swinging = false, knocked = false, facingRight = true, justLanded = false;
     
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -29,11 +31,15 @@ public class PlayerMovement : MonoBehaviour
         grassEffect = GameObject.Find("GrassParticleEffect");
     }
 
-    // Update is called once per frame
     void Update()
     {
         movInput = Input.GetAxis("Horizontal");
-        if(!swinging) Jump();
+
+        // Only allow player to jump if they are not grappling 
+        if (!swinging)
+        {
+            Jump();
+        }
 
         if (swinging || jumping || knocked)
         {
@@ -55,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (knocked)
         {
+            // Timer for knockback 
             if (knockbackTime <= 0)
             {
                 knocked = false;
@@ -72,6 +79,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /*
+     * Method to handle walking of player 
+     */
     private void Move()
     {
         if (movInput != 0)
@@ -81,9 +91,11 @@ public class PlayerMovement : MonoBehaviour
 
             if (!jumping)
             {
+                // Trigger jump animation state 
                 anim.SetInteger("state", 1);
             }
 
+            // Flip the player depending on their direction of movement
             if (movInput < 0)
             {
                 transform.eulerAngles = new Vector3(0, -180, 0);
@@ -100,12 +112,16 @@ public class PlayerMovement : MonoBehaviour
             am.Stop("WalkSound");
             if (!jumping && IsGrounded())
             {
+                // Trigger idle animation state 
                 anim.SetInteger("state", 0);
             }
             return;
         }      
     }
 
+    /*
+     * Method to handle the force applied to the player when swinging/grappling 
+     */
     public void Swing()
     {
         if (swinging)
@@ -133,8 +149,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /*
+     * Method to handle player jumping and all animation states involved in this (jump, fall, and land states)
+     */
     void Jump()
-    {           
+    {          
+        // Add initial force when jump is presssed
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {    
             jumping = true;
@@ -142,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetInteger("state", 2);
             am.Play("JumpSound");
         }
+        // Allow a higher jump when holding the jump button 
         else if (Input.GetButtonUp("Jump"))
         {
             if (rb.velocity.y > 0)
@@ -152,10 +173,11 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (rb.velocity.y < 0 && !swinging)
         {
+            // Set animation state to falling 
             anim.SetInteger("state", 3);
         }
 
-
+        // !swinging here ensures that these animations won't play while swinging, despite the velocity conditions matching in both situations 
         if (rb.velocity.y > 0 && !IsGrounded() && !swinging)
         {
             // Set animation state to jumping
@@ -172,12 +194,17 @@ public class PlayerMovement : MonoBehaviour
             // Set animation state to landing 
             jumping = false;
             anim.SetInteger("state", 4);
+
+            // Instantiate grass particle effect on landing 
             GameObject newGrassEffect = (Instantiate(grassEffect, feetPos.position, Quaternion.Euler(-90, 0, 0)));
             justLanded = true;
             Destroy(newGrassEffect, 2f);
         }
     }
 
+    /*
+     * Method to handle knockback force applied to the player when damaged 
+     */
     public void Knockback()
     {
         knocked = true;
@@ -194,22 +221,39 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /*
+     * Method used by other scripts to determine whether the player is currently facing right 
+     * Returns: bool facingRight - true if the player is facing right, false otherwise 
+     */
     public bool IsFacingRight()
     {
         return facingRight;
     }
 
+    /*
+     * Method used by other scripts to determine whether the player is currently grounded 
+     * Returns: bool grounded - true if the player is grounded, false otherwise 
+     */
     public bool IsGrounded()
     {
         grounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
         return grounded;
     }
 
+    /*
+     * Method to set the player's swinging property 
+     * Params: bool _swinging - true if the player is currently swinging 
+     * Returns: bool swinging - the new value of swinging, true if swinging
+     */
     public bool SetIsSwinging(bool _swinging)
     {
         return swinging = _swinging;
     }
 
+    /*
+     * Method used by other scripts to determine whether the player is currently swinging/grappling
+     * Returns: bool swinging/grappling - true if the player is swinging/grappling, false otherwise 
+     */
     public bool GetIsSwinging()
     {
         return swinging;

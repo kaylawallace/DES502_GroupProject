@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Script to handle enemies taking damage and death 
+ */
 public class Enemy : MonoBehaviour
 {
-    public int maxHealth = 30;
+    public int maxHealth;
 
     private int currHealth;
     private bool justDamaged = false;
@@ -33,6 +36,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /*
+     * Method to handle taking damage
+     * Params: int damage - the amount of damage the enemy will take 
+     */
     public void TakeDamage(int damage)
     {
         if (!justDamaged)
@@ -47,6 +54,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /*
+     * Method to handle enemy death 
+     */
     private void Die()
     {
         if (gameObject.GetComponent<ShootingEnemy>())

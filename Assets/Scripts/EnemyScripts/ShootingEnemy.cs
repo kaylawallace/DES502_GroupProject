@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Script to handle the behaviour of the shooting enemies 
+ */
 public class ShootingEnemy : MonoBehaviour
 {
     public GameObject projectile;   
@@ -14,7 +17,6 @@ public class ShootingEnemy : MonoBehaviour
     private AudioManager am;
     private Player plrComponent;
     
-    // Start is called before the first frame update
     void Start()
     {
         target = GameObject.Find("Player");
@@ -22,12 +24,13 @@ public class ShootingEnemy : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         am = FindObjectOfType<AudioManager>();
 
-        currShotTime = 0;    
+        currShotTime = maxShotTime;    
     }
 
 
     void Update()
     {
+        // Only allow the enemy to shoot if the player is not invisible and is within shooting distance 
         if (!plrComponent.GetInvisible())
         {
             if (DistanceFromPlayer() <= shootDist)
@@ -47,6 +50,10 @@ public class ShootingEnemy : MonoBehaviour
         }
     }
 
+    /*
+     * Method to determine the distance from the player and the plant 
+     * Returns: float dist - the distance calculated between the player position and the enemy position 
+     */
     float DistanceFromPlayer() 
     {
         float dist = Vector2.Distance(target.transform.position, transform.position);
